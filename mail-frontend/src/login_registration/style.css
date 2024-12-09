@@ -1,0 +1,102 @@
+.login-body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.form {
+    width: 20%;
+    height: 50%;
+    background: #e9c7c5;
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.registration-form {
+    width: 20%;
+    height: 55%;
+    background: #e9c7c5;
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.error-msg {
+    padding: 10px;
+    background-color: #A34054;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.error-msg img {
+    height: 20px;
+    width: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.field input:hover {
+    padding: 9px;
+    border: 1px solid black;
+}
+
+.field input:focus {
+    outline: none;
+}
+
+
+.field p {
+    font-size: 20px;
+}
+
+.action-button {
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #662249;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.action-button:hover {
+    background-color: #81345f;
+}
+
+.other-page {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.other-page button {
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.other-page button:hover {
+    color: #81345f;
+}
