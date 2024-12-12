@@ -1,11 +1,14 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.ContactDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "contacts")
+@Builder
 public class Contact {
 
     @Id
@@ -59,4 +62,11 @@ public class Contact {
     public void setMembers(Set<ContactMember> members) {
         this.members = members;
     }
+//    public ContactDTO toDTO() {
+//        return ContactDTO.builder()
+//                .contactId(contactId)
+//                .contactName(contactName)
+//                .ownerId(owner.getUserId())
+//                .build();
+//    }
 }

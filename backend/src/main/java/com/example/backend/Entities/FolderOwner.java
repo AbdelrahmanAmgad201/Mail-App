@@ -1,11 +1,14 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.FolderOwnerDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "folder_owners")
+@Builder
 public class FolderOwner {
 
     @Id
@@ -71,5 +74,13 @@ public class FolderOwner {
     public void setFilters(Set<FolderBySubject> filters) {
         this.filters = filters;
     }
+
+//    public FolderOwnerDTO toDTO() {
+//        return FolderOwnerDTO.builder()
+//                .folderId(folderId)
+//                .folderName(folderName)
+//                .userId(user.getUserId())
+//                .build();
+//    }
 }
 

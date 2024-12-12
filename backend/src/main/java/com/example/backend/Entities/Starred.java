@@ -1,10 +1,13 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.StarredDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 
 @Entity
 @Table(name = "starred")
+@Builder
 public class Starred {
 
     @Id
@@ -48,4 +51,12 @@ public class Starred {
     public void setEmail(Email email) {
         this.email = email;
     }
+
+//    public StarredDTO toDTO() {
+//        return StarredDTO.builder()
+//                .userId(user.getUserId())
+//                .emailId(email.getEmailId())
+//                .build();
+//    }
+
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class folder_membersDTO {
+public class FolderMemberDTO {
     private long folder_id;
     private long user_id;
 

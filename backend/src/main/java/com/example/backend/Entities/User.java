@@ -1,11 +1,14 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.UserDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Builder
 public class User {
 
     @Id
@@ -92,4 +95,13 @@ public class User {
     public void setStarredEmails(Set<Starred> starredEmails) {
         this.starredEmails = starredEmails;
     }
+
+//    public UserDTO toDTO() {
+//        return UserDTO.builder()
+//                .userId(userId)
+//                .emailAddress(emailAddress)
+//                .firstName(firstName)
+//                .lastName(lastName)
+//                .build();
+//    }
 }

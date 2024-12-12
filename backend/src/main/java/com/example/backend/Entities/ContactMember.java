@@ -1,9 +1,12 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.ContactMemberDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
 @Table(name = "contact_members")
+@Builder
 public class ContactMember {
 
     @Id
@@ -47,4 +50,12 @@ public class ContactMember {
     public void setMember(User member) {
         this.member = member;
     }
+
+//    public ContactMemberDTO toDTO() {
+//        return ContactMemberDTO.builder()
+//                .memberId(memberId)
+//                .contactId(contact.getContactId())
+//                .userId(member.getUserId())
+//                .build();
+//    }
 }

@@ -6,7 +6,7 @@ import com.example.backend.Entities.Starred;
 
 @Builder
 @Data
-public class starredDTO {
+public class StarredDTO {
     private long user_id;
     private String email_id;
     public Starred toEntity(){

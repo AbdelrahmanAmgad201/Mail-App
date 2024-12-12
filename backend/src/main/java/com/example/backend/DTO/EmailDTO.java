@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @Builder
-public class emailsDTO {
+public class EmailDTO {
     private long email_id;
     private String subject;
     private String body;

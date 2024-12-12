@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class receiversDTO {
+public class ReceiverDTO {
     private long email_id;
     private long receiver_id;
     private boolean is_read;

@@ -1,9 +1,12 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.AttachmentDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
 @Table(name = "attachments")
+@Builder
 public class Attachment {
 
     @Id
@@ -65,4 +68,17 @@ public class Attachment {
     public void setEmail(Email email) {
         this.email = email;
     }
+
+//    public AttachmentDTO toDTO() {
+//        return AttachmentDTO.builder()
+//                .attachmentId(attachmentId)
+//                .emailId(email.getEmailId())
+//                .fileName(fileName)
+//                .fileType(fileType)
+//                .fileSize(fileSize)
+//                .build();
+//    }
+
+
+
 }

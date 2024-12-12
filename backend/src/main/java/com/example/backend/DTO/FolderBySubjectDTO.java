@@ -6,8 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-
-public class folder_by_subjectDTO {
+public class FolderBySubjectDTO {
     private long folder_id;
     private String filter_subject;
     public FolderBySubject toEntity(){

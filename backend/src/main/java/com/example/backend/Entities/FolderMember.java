@@ -1,9 +1,12 @@
 package com.example.backend.Entities;
 
+import com.example.backend.DTO.FolderMemberDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
 @Table(name = "folder_members")
+@Builder
 public class FolderMember {
 
     @Id
@@ -47,4 +50,12 @@ public class FolderMember {
     public void setUser(User user) {
         this.user = user;
     }
+
+//    public FolderMemberDTO toDTO() {
+//        return FolderMemberDTO.builder()
+//                .folderId(folder.getFolderId())
+//                .userId(user.getUserId())
+//                .build();
+//    }
+
 }
