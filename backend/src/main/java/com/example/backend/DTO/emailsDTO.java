@@ -1,7 +1,7 @@
 package com.example.backend.DTO;
 
 import com.example.backend.Entities.Priority;
-import com.example.backend.Entities.emails;
+import com.example.backend.Entities.Email;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,8 +17,8 @@ public class emailsDTO {
     private long sender_id;
     private Priority priority;
     private boolean is_spam;
-    public emails toEntity(){
-        return emails.builder()
+    public Email toEntity(){
+        return Email.builder()
                 .email_id(email_id)
                 .body(body)
                 .subject(subject)

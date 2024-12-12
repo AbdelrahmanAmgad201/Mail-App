@@ -1,6 +1,6 @@
 package com.example.backend.DTO;
 
-import com.example.backend.Entities.folder_owners;
+import com.example.backend.Entities.FolderOwner;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,8 +11,8 @@ public class folder_ownersDTO {
     private String folder_name;
     private  String user_id;
 
-    public folder_owners toEntity(){
-        return folder_owners.builder()
+    public FolderOwner toEntity(){
+        return FolderOwner.builder()
                 .folder_id(folder_id)
                 .folder_name(folder_name)
                 .user_id(user_id)

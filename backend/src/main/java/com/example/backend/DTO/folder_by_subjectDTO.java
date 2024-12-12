@@ -1,6 +1,6 @@
 package com.example.backend.DTO;
 
-import com.example.backend.Entities.folder_by_subject;
+import com.example.backend.Entities.FolderBySubject;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,8 +10,8 @@ import lombok.Data;
 public class folder_by_subjectDTO {
     private long folder_id;
     private String filter_subject;
-    public folder_by_subject toEntity(){
-        return folder_by_subject.builder()
+    public FolderBySubject toEntity(){
+        return FolderBySubject.builder()
                 .folder_id(folder_id)
                 .filter_subject(filter_subject)
                 .build();

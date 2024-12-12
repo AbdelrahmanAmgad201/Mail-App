@@ -1,6 +1,6 @@
 package com.example.backend.DTO;
 
-import com.example.backend.Entities.folder_members;
+import com.example.backend.Entities.FolderMember;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,8 +10,8 @@ public class folder_membersDTO {
     private long folder_id;
     private long user_id;
 
-    public folder_members toEntity(){
-        return folder_members.builder()
+    public FolderMember toEntity(){
+        return FolderMember.builder()
                 .folder_id(folder_id)
                 .user_id(user_id)
                 .build();

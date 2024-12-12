@@ -1,12 +1,12 @@
 package com.example.backend.DTO;
 
-import com.example.backend.Entities.attachments;
+import com.example.backend.Entities.Attachment;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class attachmentsDTO {
+public class AttachmentDTO {
     private long email_id;
 
     private long attachment_id;
@@ -14,8 +14,8 @@ public class attachmentsDTO {
     private String file_type;
     private long file_size;
 
-    public attachments toEntity() {
-        return attachments.builder()
+    public Attachment toEntity() {
+        return Attachment.builder()
                 .email_id(email_id)
                 .attachment_id(attachment_id)
                 .file_name(file_name)

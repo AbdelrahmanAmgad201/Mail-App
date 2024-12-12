@@ -1,6 +1,6 @@
 package com.example.backend.DTO;
 
-import com.example.backend.Entities.contact_members;
+import com.example.backend.Entities.ContactMember;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,8 +9,8 @@ import lombok.Data;
 public class contact_membersDTO {
     private long contact_id;
     private long member_id;
-    public contact_members toEntity(){
-        return contact_members.builder()
+    public ContactMember toEntity(){
+        return ContactMember.builder()
                 .contact_id(contact_id)
                 .member_id(member_id)
                 .build();
