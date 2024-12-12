@@ -1,12 +1,11 @@
 package com.example.backend.Entities;
 
-import com.example.backend.DTO.ReceiverDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 
 @Entity
 @Table(name = "receivers")
-@Builder
+
 public class Receiver {
 
     @Id
@@ -61,13 +60,5 @@ public class Receiver {
     public void setRead(Boolean read) {
         isRead = read;
     }
-
-//    public ReceiverDTO toDTO() {
-//        return ReceiverDTO.builder()
-//                .emailId(email.getEmailId())
-//                .receiverId(receiver.getUserId())
-//                .isRead(isRead)
-//                .build();
-//    }
 
 }

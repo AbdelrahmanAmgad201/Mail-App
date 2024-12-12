@@ -1,6 +1,5 @@
 package com.example.backend.Entities;
 
-import com.example.backend.DTO.EmailDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "emails")
-@Builder
+
 public class Email {
 
     @Id
@@ -117,16 +116,4 @@ public class Email {
     public void setAttachments(Set<Attachment> attachments) {
         this.attachments = attachments;
     }
-//
-//    public EmailDTO toDTO() {
-//        return EmailDTO.builder()
-//                .emailId(emailId)
-//                .subject(subject)
-//                .body(body)
-//                .dateSent(dateSent)
-//                .senderId(sender.getUserId())
-//                .priority(priority)
-//                .isSpam(isSpam)
-//                .build();
-//    }
 }
