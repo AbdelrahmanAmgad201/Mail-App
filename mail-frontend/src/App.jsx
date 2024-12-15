@@ -21,13 +21,19 @@ import ContactMenu from './contact-menu/ContactMenu.jsx'
 function App(props) {
 
   const [showAddFolderPopup, setShowAddFolderPopup] = useState(false)
-  const [showDefaultSideBar, setshowDefaultSideBar] = useState(true)
+  const [showDefaultSideBar, setShowDefaultSideBar] = useState(true)
   const [showContactMenu, setShowContactMenu] = useState(false)
 
+  const closeFolderPopup = () => {
+    setShowAddFolderPopup(false)
+  }
+
+  const closeContactMenu = () => {
+    setShowContactMenu(false)
+    setShowDefaultSideBar(true)
+  }
+
   useEffect(() => {
-    // setShowAddFolderPopup(true)
-    setshowDefaultSideBar(false)
-    setShowContactMenu(true)
     return () => {
         
     }
@@ -35,7 +41,7 @@ function App(props) {
 
   return (
     <div className='main'>
-      {showAddFolderPopup && <Add_Folder_Popup />}
+      {showAddFolderPopup && <Add_Folder_Popup closeFolderPopupFun={closeFolderPopup}/>}
       <div className='side-bar'>
         { showDefaultSideBar && <div className='default'>
           <button className='compose-btn'><img src={edit_img}/><div>Compose</div></button>
@@ -46,17 +52,21 @@ function App(props) {
           <button className='default-btns'><img src={file_img}/><div>Drafts</div></button>
           <button className='default-btns'><img src={bin_img}/><div>Trash</div></button>
 
-          <button className='contacts-btn'><img src={contact_img}/><div>Contacts</div></button>
+          <button className='contacts-btn' onClick={() => {
+            setShowContactMenu(true)
+            setShowDefaultSideBar(false)
+          }}>
+            <img src={contact_img}/><div>Contacts</div></button>
           <div className='folders'>
             <div className='title'>
               <p>Folders</p>
-              <button><img src={plus_img}/></button>
+              <button onClick={() => {setShowAddFolderPopup(true)}}><img src={plus_img}/></button>
             </div>
             <button className='folder-btn'>university</button>
           </div>
         </div>}
 
-        {showContactMenu && <ContactMenu />}
+        {showContactMenu && <ContactMenu closeMenu={closeContactMenu}/>}
 
       </div>
       <div className='main-body'>

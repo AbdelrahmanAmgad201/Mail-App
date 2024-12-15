@@ -10,13 +10,132 @@
 }
 
 .popup-body .content {
-    width: 50%;
-    height: 50%;
+    width: 30%;
     background-color: #eee;
     border-radius: 25px;
     padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
+    z-index: 2;
+}
+
+.popup-body .content img {
+    width: 20px;
+    height: 20px;
+}
+
+.popup-body .content .add-button {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.popup-body .content .remove-button {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.popup-body .content .title {
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    font-weight: bold;
+}
+
+.popup-body .content .folder-name-input {
+    display: flex;
+    gap: 20px;
+}
+
+.popup-body .content .folder-name-input p {
+    font-size: 20px;
+}
+
+.popup-body .content .folder-name-input input {
+    padding: 5px;
+    width: 300px;
+}
+
+.popup-body .content .input-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-body .content .input-field .input-field-title {
+    font-size: 20px;
+}
+
+.popup-body .content .input-field .input-choosed {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.popup-body .content .input-field .add-subject-input {
+    padding: 10px;
+}
+
+.popup-body .content .input-field .input-choosed div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.popup-body .content .add-folder-dev {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-body .content .add-folder-button {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #A34054;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.popup-body .content .add-folder-button:hover {
+    padding: 10px 20px;
+    outline: 2px solid black;
+}
+
+.popup-contacts {
+    position: absolute;
+    width: 300px;
+    height: max(400px);
+    background-color: #eee;
+    z-index: 2;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+.popup-contacts .title {
+    font-size: 28px;
+    font-family: bold;
+    margin-bottom: 10px;
+}
+
+.popup-contacts button {
+    background-color: white;
+    padding: 8px 18px;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.popup-contacts button:hover {
+    outline: 2px solid black;
 }
