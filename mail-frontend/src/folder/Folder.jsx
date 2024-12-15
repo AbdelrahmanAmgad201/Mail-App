@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import './Inbox.css';
-import Email from './Email';
+import './Folder.css';
+import Email from "../inbox/Email.jsx"; // going one level up
 
-function Inbox() {
+
+function Folder() {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isSortMenuVisible, setSortMenuVisible] = useState(false);
   const dropdownRef = useRef(null);
@@ -56,22 +57,23 @@ function Inbox() {
   };
 
   return (
-    <div className='emails-bar'>
-      <div className='selection-bar'>
-          <div className='select-btn'>
-            <button>
-              <img src="src/inbox/pics/stop.png" alt="Icon" />
-            </button>
-            <button onClick={toggleDropdown}>
-              <img src="src/inbox/pics/down-arrow.png" alt="Icon" />
-            </button>
-          </div>
-        <button><img src="src/inbox/pics/reload.png" alt="Icon" /></button>
-        <button className='sort-btn' onClick={toggleSortMenu}>
-          <img src="src/inbox/pics/vertical-dots.png" alt="Icon" />
-        </button>
+      <div className='emails-bar'>
 
-      </div>
+        <div className='selection-bar'>
+                <div className='select-btn'>
+                  <button>
+                    <img src="src/inbox/pics/stop.png" alt="Icon" />
+                  </button>
+                  <button onClick={toggleDropdown}>
+                    <img src="src/inbox/pics/down-arrow.png" alt="Icon" />
+                  </button>
+                </div>
+              <button><img src="src/inbox/pics/reload.png" alt="Icon" /></button>
+              <button className='sort-btn' onClick={toggleSortMenu}>
+                <img src="src/inbox/pics/vertical-dots.png" alt="Icon" />
+              </button>
+        </div>
+      
         <div className='menus-toggling'>
 
             {isDropdownVisible && (
@@ -90,12 +92,42 @@ function Inbox() {
                   <p>priority</p>
                 </div>
             )}
-            <div className='emailsDisplay'>
-              {/* Dynamically render Email components */}
-              {emailList.map((email) => (
-                <Email key={email.id} subject={email.subject} sender={email.sender} />
-              ))}
-            </div>
+            
+            
+              <div className='folder-heading-info'>
+
+                  <div>
+                    <p>FolderType: </p>
+                    <p>(ContactName)(Subject)</p>
+                  </div>
+
+                  <p>ContactEmail</p>
+
+              </div>
+
+              <div className='folder-emails-display'>
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+                <Email />
+
+                {/* Dynamically render Email components
+                {emailList.map((email) => (
+                  <Email key={email.id} subject={email.subject} sender={email.sender} />
+                ))} */}
+
+              </div>
+
+              <p className='pagination'>pagination</p>
+              
 
       </div>
 
@@ -103,4 +135,4 @@ function Inbox() {
   );
 }
 
-export default Inbox;
+export default Folder;
