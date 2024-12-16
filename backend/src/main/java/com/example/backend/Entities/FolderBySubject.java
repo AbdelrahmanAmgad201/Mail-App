@@ -1,16 +1,15 @@
 package com.example.backend.Entities;
 
-import com.example.backend.DTO.FolderBySubjectDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 
 @Entity
 @Table(name = "folder_by_subject")
-@Builder
+
 public class FolderBySubject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @ManyToOne
@@ -49,10 +48,5 @@ public class FolderBySubject {
         this.filterSubject = filterSubject;
     }
 
-//    public FolderBySubjectDTO toDTO() {
-//        return FolderBySubjectDTO.builder()
-//                .folderId(folder.getId())  // Assuming FolderOwner has getId method
-//                .filterSubject(this.filterSubject)
-//                .build();
-//    }
+
 }

@@ -1,17 +1,16 @@
 package com.example.backend.Entities;
 
-import com.example.backend.DTO.StarredDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 
 
 @Entity
 @Table(name = "starred")
-@Builder
+
 public class Starred {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @ManyToOne
@@ -26,6 +25,9 @@ public class Starred {
         this.id = id;
         this.user = user;
         this.email = email;
+    }
+
+    public Starred(){
     }
 
     public Long getId() {
@@ -52,11 +54,5 @@ public class Starred {
         this.email = email;
     }
 
-//    public StarredDTO toDTO() {
-//        return StarredDTO.builder()
-//                .userId(user.getUserId())
-//                .emailId(email.getEmailId())
-//                .build();
-//    }
 
 }
