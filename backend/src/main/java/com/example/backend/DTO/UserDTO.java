@@ -3,7 +3,7 @@ package com.example.backend.DTO;
 import com.example.backend.Entities.User;
 import lombok.Builder;
 import lombok.Data;
-import com.example.backend.Entities.user;
+
 @Data
 @Builder
 public class UserDTO  {

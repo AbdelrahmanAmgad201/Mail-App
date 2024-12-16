@@ -3,7 +3,7 @@ package com.example.backend.DTO;
 import com.example.backend.Entities.Contact;
 import com.example.backend.Entities.ContactMember;
 import com.example.backend.Entities.User;
-import com.example.backend.Entities.contacts;
+
 import lombok.Builder;
 import lombok.Data;
 
