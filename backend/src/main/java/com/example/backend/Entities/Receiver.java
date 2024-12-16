@@ -3,6 +3,8 @@ package com.example.backend.Entities;
 import jakarta.persistence.*;
 import lombok.Builder;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "receivers")
 
@@ -21,12 +23,32 @@ public class Receiver {
     private User receiver;
 
     private Boolean isRead;
+    private Boolean isTrashed;
+    private Date dateTrashed;
 
-    public Receiver(Boolean isRead, User receiver, Email email, Long id) {
-        this.isRead = isRead;
-        this.receiver = receiver;
-        this.email = email;
+    public Receiver(Long id, Email email, User receiver, Boolean isRead, Boolean isTrashed, Date dateTrashed) {
         this.id = id;
+        this.email = email;
+        this.receiver = receiver;
+        this.isRead = isRead;
+        this.isTrashed = isTrashed;
+        this.dateTrashed = dateTrashed;
+    }
+
+    public Boolean getTrashed() {
+        return isTrashed;
+    }
+
+    public void setTrashed(Boolean trashed) {
+        isTrashed = trashed;
+    }
+
+    public Date getDateTrashed() {
+        return dateTrashed;
+    }
+
+    public void setDateTrashed(Date dateTrashed) {
+        this.dateTrashed = dateTrashed;
     }
 
     public Long getId() {

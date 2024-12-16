@@ -4,46 +4,36 @@ import jakarta.persistence.*;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "emails")
-
 public class Email {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long emailId;
 
+    @Column(length = 255)
     private String subject;
-    private String body;
-    private String priority;
-    private Boolean isSpam;
 
-    @Column(nullable = false)
-    private java.time.LocalDateTime dateSent;
+    @Column(columnDefinition = "TEXT")
+    private String body;
+
+    @OneToOne
+    @JoinColumn(name = "metadata_id")
+    private EmailMetadata metadata;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @OneToMany(mappedBy = "email")
+    @OneToMany(mappedBy = "email", cascade = CascadeType.ALL)
     private Set<Receiver> receivers;
 
-    @OneToMany(mappedBy = "email")
+    @OneToMany(mappedBy = "email", cascade = CascadeType.ALL)
     private Set<Attachment> attachments;
-
-    public Email(Long emailId, String subject, String body, String priority, Boolean isSpam, LocalDateTime dateSent, User sender, Set<Receiver> receivers, Set<Attachment> attachments) {
-        this.emailId = emailId;
-        this.subject = subject;
-        this.body = body;
-        this.priority = priority;
-        this.isSpam = isSpam;
-        this.dateSent = dateSent;
-        this.sender = sender;
-        this.receivers = receivers;
-        this.attachments = attachments;
-    }
 
     public Long getEmailId() {
         return emailId;
@@ -69,28 +59,12 @@ public class Email {
         this.body = body;
     }
 
-    public String getPriority() {
-        return priority;
+    public EmailMetadata getMetadata() {
+        return metadata;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public Boolean getSpam() {
-        return isSpam;
-    }
-
-    public void setSpam(Boolean spam) {
-        isSpam = spam;
-    }
-
-    public LocalDateTime getDateSent() {
-        return dateSent;
-    }
-
-    public void setDateSent(LocalDateTime dateSent) {
-        this.dateSent = dateSent;
+    public void setMetadata(EmailMetadata metadata) {
+        this.metadata = metadata;
     }
 
     public User getSender() {
@@ -115,5 +89,19 @@ public class Email {
 
     public void setAttachments(Set<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public Email(Long emailId, String subject, String body, EmailMetadata metadata, User sender, Set<Receiver> receivers, Set<Attachment> attachments) {
+        this.emailId = emailId;
+        this.subject = subject;
+        this.body = body;
+        this.metadata = metadata;
+        this.sender = sender;
+        this.receivers = receivers;
+        this.attachments = attachments;
+    }
+
+    public Email() {
+
     }
 }
