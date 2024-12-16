@@ -1,8 +1,15 @@
 package com.example.backend.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "contact_members")
 
@@ -20,34 +27,5 @@ public class ContactMember {
     @JoinColumn(name = "member_id", nullable = false)
     private User member;
 
-    public ContactMember(Long id, Contact contact, User member) {
-        this.id = id;
-        this.contact = contact;
-        this.member = member;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    public User getMember() {
-        return member;
-    }
-
-    public void setMember(User member) {
-        this.member = member;
-    }
 
 }

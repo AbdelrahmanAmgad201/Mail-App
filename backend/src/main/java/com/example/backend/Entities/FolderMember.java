@@ -1,8 +1,15 @@
 package com.example.backend.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "folder_members")
 
@@ -19,36 +26,6 @@ public class FolderMember {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    public FolderMember(Long id, FolderOwner folder, User user) {
-        this.id = id;
-        this.folder = folder;
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public FolderOwner getFolder() {
-        return folder;
-    }
-
-    public void setFolder(FolderOwner folder) {
-        this.folder = folder;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
 
 }
