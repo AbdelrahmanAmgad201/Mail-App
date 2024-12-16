@@ -1,9 +1,18 @@
 package com.example.backend.Entities;
+
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "email_metadata")
 public class EmailMetadata {
@@ -21,9 +30,6 @@ public class EmailMetadata {
 
     @Column(name = "is_spam")
     private Boolean isSpam;
-
-    @Column(name = "is_starred") // did the sender star it
-    private Boolean isStarred;
 
     @Column(name = "date_sent", nullable = false)
     private LocalDateTime dateSent;

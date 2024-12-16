@@ -1,13 +1,17 @@
 package com.example.backend.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Set;
 
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "emails")
 public class Email {
@@ -35,73 +39,4 @@ public class Email {
     @OneToMany(mappedBy = "email", cascade = CascadeType.ALL)
     private Set<Attachment> attachments;
 
-    public Long getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(Long emailId) {
-        this.emailId = emailId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public EmailMetadata getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(EmailMetadata metadata) {
-        this.metadata = metadata;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public Set<Receiver> getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(Set<Receiver> receivers) {
-        this.receivers = receivers;
-    }
-
-    public Set<Attachment> getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(Set<Attachment> attachments) {
-        this.attachments = attachments;
-    }
-
-    public Email(Long emailId, String subject, String body, EmailMetadata metadata, User sender, Set<Receiver> receivers, Set<Attachment> attachments) {
-        this.emailId = emailId;
-        this.subject = subject;
-        this.body = body;
-        this.metadata = metadata;
-        this.sender = sender;
-        this.receivers = receivers;
-        this.attachments = attachments;
-    }
-
-    public Email() {
-
-    }
 }
