@@ -8,6 +8,7 @@
 //
 //public interface EmailRepository extends JpaRepository<Email, Long> {
 //
+//     List<Email> findBySender_UserId(Long userId);
 //    // Custom query to find emails in a folder, filtered by member (user) and subject
 //    List<Email> findByFolder_IdAndReceivers_User_IdAndSubject(Long folderId, Long userId, String subject);
 //}
