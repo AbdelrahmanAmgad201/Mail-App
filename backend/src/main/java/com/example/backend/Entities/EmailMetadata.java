@@ -26,6 +26,7 @@ public class EmailMetadata {
     @Column(name = "date_trashed")
     private Date dateTrashed;
 
+    @Column(name = "priority")
     private Priority priority;
 
     @Column(name = "is_spam")

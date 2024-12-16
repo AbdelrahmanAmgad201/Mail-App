@@ -21,6 +21,7 @@ public class FolderOwner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long folderId;
 
+    @Column(name = "folder_name")
     private String folderName;
 
     @ManyToOne

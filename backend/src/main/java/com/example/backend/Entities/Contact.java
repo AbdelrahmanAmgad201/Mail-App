@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
 @Data
@@ -14,9 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "contacts")
-
 public class Contact {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contactId;
@@ -25,9 +22,9 @@ public class Contact {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
+    @Column(name = "contact_name", nullable = false)
     private String contactName;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ContactMember> members;
-
 }

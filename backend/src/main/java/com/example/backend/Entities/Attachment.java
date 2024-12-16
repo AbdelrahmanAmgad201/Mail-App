@@ -14,24 +14,20 @@ import lombok.NoArgsConstructor;
 @Table(name = "attachments")
 
 public class Attachment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long attachmentId;
+    private Long attachmentId;
 
-    private final String fileName;
-    private final String fileType;
-    private final Long fileSize;
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+
+    @Column(name = "file_type")
+    private String fileType;
+
+    @Column(name = "file_size")
+    private Long fileSize;
+
     @ManyToOne
     @JoinColumn(name = "email_id", nullable = false)
-    private final Email email;
-
-    public Attachment(Long attachmentId, String fileName, String fileType, Long fileSize, Email email) {
-        this.attachmentId = attachmentId;
-        this.fileName = fileName;
-        this.fileType = fileType;
-        this.fileSize = fileSize;
-        this.email = email;
-    }
-
+    private Email email;
 }

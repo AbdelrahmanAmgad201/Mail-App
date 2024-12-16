@@ -23,6 +23,7 @@ public class FolderBySubject {
     @JoinColumn(name = "folder_id", nullable = false)
     private FolderOwner folder;
 
+    @Column(name = "filter_subject")
     private String filterSubject;
 
 }
