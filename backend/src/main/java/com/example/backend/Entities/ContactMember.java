@@ -1,5 +1,6 @@
 package com.example.backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +22,12 @@ public class ContactMember {
 
     @ManyToOne
     @JoinColumn(name = "contact_id", nullable = false)
+    @JsonBackReference
     private Contact contact;
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
+    @JsonBackReference
     private User member;
 
 

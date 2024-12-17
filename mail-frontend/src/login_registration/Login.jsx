@@ -8,24 +8,36 @@ function Login(props) {
     const emailInput = useRef(null)
     const passwordInput = useRef(null)
 
-    const validateUserInput = () => {
-        if (emailInput.current.value == "")
-            return false
-        return true
-    }
-
-    const submitUserInput = () => {
-        if (!validateUserInput()){
-            setErrorMsg(true)
-            emailInput.current.value = ""
-            passwordInput.current.value = ""
-            return
-        }
-
+    const submitUserInput = async () => {
         props.user.current.email = emailInput.current.value
         props.user.current.password = passwordInput.current.value
-        if (true){
-            props.goToApp()
+
+        const data = {
+            email: emailInput.current.value,
+            password: passwordInput.current.value
+        }
+        const url = 'http://localhost:8080/api/registration/login'
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            // Handle the response
+            if (response.ok) {
+                const result = await response.text();
+                console.log(result)
+                props.user.current.id = result
+                props.goToApp()
+            } 
+            else {
+                setErrorMsg(true)
+            }
+        } catch (error) {
+            console.error('Network error:', error);
         }
     }
 
@@ -50,8 +62,8 @@ function Login(props) {
                 <p>Password</p>
                 <input ref={passwordInput} type='password' placeholder='password'/>
             </div>
-            <button className='action-button' onClick={()=>{
-                submitUserInput()
+            <button className='action-button' onClick={async ()=>{
+                await submitUserInput()
             }}>Log In</button>
             <div className='other-page'>
                 <div>Don't have an account?</div> 

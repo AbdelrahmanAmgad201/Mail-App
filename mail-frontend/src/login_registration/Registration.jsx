@@ -34,7 +34,7 @@ function Registration(props) {
         return true
     }
 
-    const submitUserInput = () => {
+    const submitUserInput = async () => {
         if (!validateUserInput()){
             setErrorMsg(true)
             wrongEmailFormatMsg()
@@ -46,8 +46,33 @@ function Registration(props) {
 
         props.user.current.email = emailInput.current.value
         props.user.current.password = passwordInput.current.value
-        if (true){
-            props.goToApp()
+
+        const data = {
+            email: emailInput.current.value,
+            password: passwordInput.current.value
+        }
+        const url = 'http://localhost:8080/api/registration/signup'
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            // Handle the response
+            if (response.ok) {
+                const result = await response.json();
+                console.log(result)
+                props.user.current.id = result
+                props.goToApp()
+            } 
+            else {
+                setErrorMsg(true)
+            }
+        } catch (error) {
+            console.error('Network error:', error);
         }
     }
 
@@ -62,7 +87,7 @@ function Registration(props) {
         <div className='registration-form'>
             {errorMsg && <div className='error-msg'>
                 <img src={danger_img} />
-                <div>{errorMsgContent}</div>
+                <div>Invalid credentials</div>
             </div>}
             <div className='field'>
                 <p>Email</p>
@@ -76,8 +101,8 @@ function Registration(props) {
                 <p>Confirm Password</p>
                 <input ref={confirmPasswordInput} type='password' placeholder='password'/>
             </div>
-            <button className='action-button' onClick={()=>{
-                submitUserInput()
+            <button className='action-button' onClick={async ()=>{
+                await submitUserInput()
             }}>Create Account</button>
             <div className='other-page'>
                 <div>Already have an account?</div> 

@@ -1,5 +1,6 @@
 package com.example.backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +22,12 @@ public class FolderMember {
 
     @ManyToOne
     @JoinColumn(name = "folder_id", nullable = false)
+    @JsonBackReference
     private FolderOwner folder;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
 

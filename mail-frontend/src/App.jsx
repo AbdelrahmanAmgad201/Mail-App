@@ -29,7 +29,7 @@ function App(props) {
   const [showContactMenu, setShowContactMenu] = useState(false);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [showComposeEmail, setShowComposeEmail] = useState(false);
-  const [showEmails, setShowEmails] = useState(false);
+  const [showEmails, setShowEmails] = useState(true);
   const [showFolder, setShowFolder] = useState(false);
 
   const filterDivRef = useRef(null);
@@ -74,7 +74,10 @@ function App(props) {
       {showAddFolderPopup && <Add_Folder_Popup closeFolderPopupFun={closeFolderPopup}/>}
       <div className='side-bar'>
       { showDefaultSideBar && <div className='default'>
-          <button className='compose-btn'><img src={edit_img}/><div>Compose</div></button>
+          <button className='compose-btn' onClick={()=>{
+            closeALLApps()
+            setShowComposeEmail(true)
+          }}><img src={edit_img}/><div>Compose</div></button>
 
           <button className='default-btns' onClick={()=>{
             closeALLApps()
@@ -121,12 +124,9 @@ function App(props) {
           <div className='user-email'>{props.email}</div>
         </div>
         <div className='main-app'>
-        {showComposeEmail && <ComposeEmail />}
+        {showComposeEmail && <ComposeEmail user={props.user}/>}
         {showFolder && <Folder />}
         {showEmails && <Inbox />}
-          {/* <Inbox /> */}
-          {/* <ComposeEmail /> */}
-          {/* <Folder /> */}
           
         </div>
       </div>

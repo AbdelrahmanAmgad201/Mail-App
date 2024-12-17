@@ -1,5 +1,6 @@
 package com.example.backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +30,11 @@ public class FolderOwner {
     private User user;
 
     @OneToMany(mappedBy = "folder")
+    @JsonManagedReference
     private Set<FolderMember> members;
 
     @OneToMany(mappedBy = "folder")
+    @JsonManagedReference
     private Set<FolderBySubject> filters;
 
 
