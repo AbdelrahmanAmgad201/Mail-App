@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,22 +14,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "receivers")
-public class Receiver {
+@Table(name = "email_metadata")
+public class EmailMetadata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "email_id", nullable = false)
-    private Email email;
-
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
-
-    @Column(name = "is_read")
-    private Boolean isRead;
+    private Long metadataId;
 
     @Column(name = "is_trashed")
     private Boolean isTrashed;
@@ -36,4 +26,15 @@ public class Receiver {
     @Column(name = "date_trashed")
     private Date dateTrashed;
 
+    @Column(name = "priority")
+    private Priority priority;
+
+    @Column(name = "is_spam")
+    private Boolean isSpam;
+
+    @Column(name = "date_sent", nullable = false)
+    private LocalDateTime dateSent;
+
+    @OneToOne(mappedBy = "metadata")
+    private Email email;
 }
