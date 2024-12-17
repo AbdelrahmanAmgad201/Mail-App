@@ -1,7 +1,7 @@
 import './Inbox.css'
 
 
-function Email() {
+function Email(props) {
   return (
     <div className='email-card'>
       
@@ -9,11 +9,11 @@ function Email() {
 
       <button> <img src="src/inbox/pics/star (2).png" alt="Icon" /></button>
 
-      <p>name</p>
+      <p>{props.sender}</p>
 
-      <p>description</p>
+      <p>{props.subject}</p>
 
-      <p>date</p>
+      <p>{props.date}</p>
 
       <button> <img src="src/inbox/pics/recycle-bin.png" alt="Icon" /></button>
 

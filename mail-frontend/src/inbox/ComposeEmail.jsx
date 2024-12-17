@@ -9,11 +9,6 @@ function ComposeEmail(props) {
     const body = useRef(null)
 
     const submitEmail = async () => {
-        // private Long senderId;
-        // private List<String> receiverEmails;
-        // private String subject;
-        // private String body;
-        // private String priority; // Can be LOW, MEDIUM, HIGH
         const data = {
             senderId: props.user.current.id,
             receiverEmails: recipientsEmails.current.value.split(';')
@@ -36,7 +31,7 @@ function ComposeEmail(props) {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result)
-                props.goToApp()
+                console.log("email sent")
             } 
         } 
         catch (error) {

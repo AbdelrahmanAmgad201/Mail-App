@@ -32,6 +32,8 @@ function App(props) {
   const [showEmails, setShowEmails] = useState(true);
   const [showFolder, setShowFolder] = useState(false);
 
+  const [emails, setEmails] = useState([])
+
   const filterDivRef = useRef(null);
 
   const closeFolderPopup = () => {
@@ -49,8 +51,30 @@ function App(props) {
     setShowComposeEmail(false)
   }
 
+  const loadEmails = async () => {
+    const url = 'http://localhost:8080/api/receivers/inbox/' + props.user.current.id
+    console.log(url)
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            setEmails(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
 
-  useEffect(() => {
+
+  useEffect(() => { 
+    loadEmails() // load emails for default page inbox
 
     const handleOutsideClick = (event) => {
       if (filterDivRef.current && !filterDivRef.current.contains(event.target)) {
@@ -79,8 +103,9 @@ function App(props) {
             setShowComposeEmail(true)
           }}><img src={edit_img}/><div>Compose</div></button>
 
-          <button className='default-btns' onClick={()=>{
+          <button className='default-btns' onClick={async ()=>{
             closeALLApps()
+            await loadEmails()
             setShowEmails(true)
           }} ><img src={inbox_img}/><div>Inbox</div></button>
           <button className='default-btns' ><img src={star_img}/><div>Starred</div></button>
@@ -124,10 +149,9 @@ function App(props) {
           <div className='user-email'>{props.email}</div>
         </div>
         <div className='main-app'>
-        {showComposeEmail && <ComposeEmail user={props.user}/>}
-        {showFolder && <Folder />}
-        {showEmails && <Inbox />}
-          
+          {showComposeEmail && <ComposeEmail user={props.user}/>}
+          {showFolder && <Folder />}
+          {showEmails && <Inbox emails={emails} reload={loadEmails}/>}
         </div>
       </div>
     </div>

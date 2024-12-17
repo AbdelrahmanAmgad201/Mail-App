@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import './Inbox.css';
-import Email from './Email';
+import './EmailOpen.css';
 
-function Inbox(props) {
+
+function EmailOpen() {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isSortMenuVisible, setSortMenuVisible] = useState(false);
   const dropdownRef = useRef(null);
   const sortMenuRef = useRef(null);
+
 
   const handleClickOutside = (event) => {
     if (
@@ -49,46 +50,48 @@ function Inbox(props) {
   return (
     <div className='emails-bar'>
       <div className='selection-bar'>
+            <button><img src="src/app-assets/appIcons/left.png" alt="Icon"/></button>
           <div className='select-btn'>
             <button>
-              <img src="src/inbox/pics/stop.png" alt="Icon" />
+              <img src="src/app-assets/appIcons/info.png" alt="Icon" />
             </button>
             <button onClick={toggleDropdown}>
               <img src="src/inbox/pics/down-arrow.png" alt="Icon" />
             </button>
           </div>
-        <button onClick={()=>{
-          props.reload()
-        }}><img src="src/inbox/pics/reload.png" alt="Icon" /></button>
+        <button><img src="src/app-assets/appIcons/star.png" alt="Icon" /></button>
         <button className='sort-btn' onClick={toggleSortMenu}>
-          <img src="src/inbox/pics/vertical-dots.png" alt="Icon" />
+          <img src="src/app-assets/appIcons/priority.png" alt="Icon" />
         </button>
-
+        <button><img src="src/app-assets/appIcons/recycle-bin.png" alt="Icon" /></button>
+        <p className='from-email'>III@gmail.com</p>
       </div>
-        <div className='menus-toggling'>
+        <div className='menus-email-toggling'>
 
             {isDropdownVisible && (
                     <div className='select-menu' ref={dropdownRef}>
-                      <p>all</p>
-                      <p>none</p>
-                      <p>starred</p>
-                      <p>unstarred</p>
-                      <p>read</p>
-                      <p>unread</p>
+                      <p>from:</p>
+                      <p>to:</p>
+                      <p>date:</p>
+                      <p>subject:</p>
                     </div>
             )}
             {isSortMenuVisible && (
                 <div className='sort-menu' ref={sortMenuRef}>
-                  <p>date</p>
-                  <p>priority</p>
+                  <p>low</p>
+                  <p>medium</p>
+                  <p>high</p>
                 </div>
             )}
-            <div className='emailsDisplay'>
-              {/* Dynamically render Email components */}
-              {props.emails.map((big) => (
-                <Email key={big.email.emailId} subject={big.email.subject} sender={big.email.sender.emailAddress} date={big.email.metadata.dateSent}/>
-              ))}
+
+            <div className='email-body'>
+                <p>Body here</p>
+                <div className='reply-btns'>
+                    <button>reply</button>
+                    <button>forward</button>
+                </div>
             </div>
+
 
       </div>
 
@@ -96,4 +99,4 @@ function Inbox(props) {
   );
 }
 
-export default Inbox;
+export default EmailOpen;

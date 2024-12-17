@@ -1,0 +1,170 @@
+    .emails-bar {
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .emails-bar:hover {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .selection-bar {
+    width: 100%;
+    height: 7vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .selection-bar:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .selection-bar button {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 2px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .select-btn:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .select-btn{
+    display:flex;
+    flex-direction:row;
+    border-radius:30%;
+    }
+    
+    .select-btn button{
+    width:30px;
+    }
+    
+    .selection-bar button:hover {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .select-btns-div{
+        display:flex;
+        flex-direction: column;
+    
+    }
+    
+    .selection-bar button img {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    }
+    
+    
+    .menus-email-toggling{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .menus-email-toggling .select-menu{
+        width:100px;
+        height:fit-content;
+        background-color: white;
+        position: relative;
+        z-index: 100;
+        margin-top: 2px;
+        border-radius: 9px;
+        margin-left:15px;
+        transition: box-shadow 0.3s ease-in-out;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .menus-email-toggling .select-menu:hover{
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    .menus-email-toggling .select-menu p{
+        margin:1px;
+        border-radius: 9px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out;
+    
+    }
+    .menus-email-toggling .select-menu p:hover{
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    
+    }
+    .menus-email-toggling .sort-menu{
+        width:100px;
+        height:fit-content;
+        background-color: white;
+        position: relative;
+        z-index: 100;
+        border-radius: 9px;
+        margin-top: 2px;
+        margin-left:90px;
+        transition: box-shadow 0.3s ease-in-out;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .menus-email-toggling .sort-menu:hover{
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .menus-email-toggling .sort-menu p{
+        margin:1px;
+        border-radius: 9px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .menus-email-toggling .sort-menu p:hover{
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .from-email{
+        margin-left:200px;
+    }
+
+    .email-body{
+        width:100%;
+        height:90%;
+        position:fixed;
+      
+    }
+
+    .email-body p{
+        width:100%;
+        height:87%;
+
+    }
+
+    .email-body .reply-btns{
+        position:fixed;
+        width:10%;
+        height:13%;
+
+        height: fit-content;
+        display:flex;
+        flex-direction:row;
+
+    }
+
+    .email-body .reply-btns button{
+        cursor: pointer;
+        margin:5px;
+
+
+    }
+    
+
+
