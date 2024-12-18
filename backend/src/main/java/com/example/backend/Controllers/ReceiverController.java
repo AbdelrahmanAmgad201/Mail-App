@@ -1,6 +1,6 @@
 package com.example.backend.Controllers;
 
-import com.example.backend.Services.ReceiverDTO;
+import com.example.backend.DTO.ReceiverDTO;
 import com.example.backend.Services.ReceiverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

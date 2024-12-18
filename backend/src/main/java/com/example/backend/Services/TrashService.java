@@ -1,5 +1,6 @@
 package com.example.backend.Services;
 
+import com.example.backend.DTO.ResponseDto;
 import com.example.backend.Entities.Email;
 import com.example.backend.Entities.EmailMetadata;
 import com.example.backend.Entities.Receiver;

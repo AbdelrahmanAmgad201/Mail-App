@@ -1,6 +1,6 @@
 package com.example.backend.Controllers;
 
-import com.example.backend.Services.ResponseDto;
+import com.example.backend.DTO.ResponseDto;
 import com.example.backend.Services.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
