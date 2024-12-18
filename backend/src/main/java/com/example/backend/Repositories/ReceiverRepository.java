@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReceiverRepository extends JpaRepository<Receiver, Long> {
@@ -35,6 +36,12 @@ public interface ReceiverRepository extends JpaRepository<Receiver, Long> {
 
     @Query("SELECT DISTINCT e FROM Email e WHERE e.sender = :user")
     List<Email> findEmailsBySender(@Param("user") User user);
+
+    @Query("SELECT r FROM Receiver r WHERE r.receiver.userId = :userId AND r.email.emailId = :emailId")
+    Optional<Receiver> findByReceiverUserIdAndEmailId(
+            @Param("userId") Long userId,
+            @Param("emailId") Long emailId
+    );
 
 
 }
