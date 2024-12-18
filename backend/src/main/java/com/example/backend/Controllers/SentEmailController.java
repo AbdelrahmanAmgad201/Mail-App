@@ -1,6 +1,6 @@
 package com.example.backend.Controllers;
 
-import com.example.backend.Services.ReceiverDTO;
+import com.example.backend.DTO.ReceiverDTO;
 import com.example.backend.Services.SentEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

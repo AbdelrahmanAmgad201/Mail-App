@@ -1,14 +1,12 @@
 package com.example.backend.Services;
 
+import com.example.backend.DTO.SendEmailRequestDTO;
 import com.example.backend.Entities.*;
 import com.example.backend.Repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.nio.file.Files;
