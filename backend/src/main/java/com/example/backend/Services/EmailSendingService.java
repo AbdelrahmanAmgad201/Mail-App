@@ -11,13 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 @Service
 @RequiredArgsConstructor
 public class EmailSendingService {
 
     private final UserRepository userRepository;
     private final EmailRepository emailRepository;
+    private final AttachmentRepository attachmentRepository;
     private final EmailMetadataRepository emailMetadataRepository;
     private final ReceiverRepository receiverRepository;
 
@@ -83,9 +87,72 @@ public class EmailSendingService {
         // Set receivers to email
         email.setReceivers(receivers);
 
-        // Establish bidirectional relationship
-        metadata.setEmail(email);
+        Set<Attachment> attachments = new HashSet<>();
+        Path directoryPath = Paths.get("./backend/attachments");
+        try {
+            if (!Files.exists(directoryPath)) {
+                Files.createDirectories(directoryPath);
+                System.out.println("Directory created: " + directoryPath.toAbsolutePath());
+            } else {
+                System.out.println("Directory already exists: " + directoryPath.toAbsolutePath());
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to create attachments directory: " + e.getMessage());
+            e.printStackTrace();
 
+        }
+
+
+        List<String> fileNames = emailRequest.getFileNames();
+        List<String> fileTypes = emailRequest.getFileTypes();
+        List<String> fileSizes = emailRequest.getFileSizes();
+        List<byte[]> contents = emailRequest.getContent();
+
+        for (int i = 0; i < fileNames.size(); i++) {
+
+            try {
+
+                String fileName = fileNames.get(i);
+                String fileType = fileTypes.get(i);
+                Long fileSize = Long.parseLong(fileSizes.get(i));
+                byte[] content = contents.get(i);
+                StringBuilder hexString = new StringBuilder();
+                for (byte b : content) {
+                    hexString.append(String.format("%02X ", b));
+                }
+                System.out.println("File content in hex: " + hexString.toString());
+
+                System.out.println("Processing Attachment:");
+                System.out.println("FileName: " + fileName);
+                System.out.println("FileType: " + fileType);
+                System.out.println("FileSize: " + fileSize);
+                Path filePath = directoryPath.resolve(fileName);
+                Files.write(filePath, content);
+                System.out.println("File saved at: " + filePath.toAbsolutePath());
+
+
+                // Build the Attachment object
+                Attachment attachment = Attachment.builder()
+                        .fileName(fileName)
+                        .fileType(fileType)
+                        .fileSize(fileSize)
+                        .email(email) // Ensure the email relationship is maintained
+                        .build();
+
+                // Save attachment to the database
+                attachment = attachmentRepository.save(attachment);
+
+                // Add to the email's attachments set
+                attachments.add(attachment);
+
+            } catch (Exception e) {
+                System.err.println("Failed to save attachment to file system: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        email.setAttachments(attachments);
+
+        metadata.setEmail(email);
         return emailRepository.save(email);
     }
 
