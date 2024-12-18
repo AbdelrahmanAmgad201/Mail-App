@@ -1,7 +1,5 @@
-package com.example.backend.Services;
+package com.example.backend.DTO;
 import com.example.backend.Entities.Priority;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

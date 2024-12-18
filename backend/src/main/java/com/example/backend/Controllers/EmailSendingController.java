@@ -1,7 +1,7 @@
 package com.example.backend.Controllers;
 
 import com.example.backend.Services.EmailSendingService;
-import com.example.backend.Services.SendEmailRequestDTO;
+import com.example.backend.DTO.SendEmailRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

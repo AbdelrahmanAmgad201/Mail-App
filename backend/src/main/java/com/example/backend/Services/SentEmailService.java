@@ -1,10 +1,11 @@
 package com.example.backend.Services;
 
+import com.example.backend.DTO.ReceiverDTO;
 import com.example.backend.Entities.*;
 import com.example.backend.Repositories.*;
-import com.example.backend.Services.ReceiverDTO.EmailDTO;
-import com.example.backend.Services.ReceiverDTO.EmailMetadataDTO;
-import com.example.backend.Services.ReceiverDTO.UserDTO;
+import com.example.backend.DTO.ReceiverDTO.EmailDTO;
+import com.example.backend.DTO.ReceiverDTO.EmailMetadataDTO;
+import com.example.backend.DTO.ReceiverDTO.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
