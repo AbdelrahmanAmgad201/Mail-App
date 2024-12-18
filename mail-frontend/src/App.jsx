@@ -33,6 +33,7 @@ function App(props) {
   const [showFolder, setShowFolder] = useState(false);
 
   const [emails, setEmails] = useState([])
+  const [folders, setFolders] = useState([])
 
   const filterDivRef = useRef(null);
 
@@ -72,9 +73,28 @@ function App(props) {
     }
   }
 
+  const loadFolders = async () => {
+    const url = 'http://localhost:8080/api/folders/user/' + props.user.current.id
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
 
   useEffect(() => { 
     loadEmails() // load emails for default page inbox
+    loadFolders()
 
     const handleOutsideClick = (event) => {
       if (filterDivRef.current && !filterDivRef.current.contains(event.target)) {
@@ -95,7 +115,7 @@ function App(props) {
 
   return (
     <div className='main'>
-      {showAddFolderPopup && <Add_Folder_Popup closeFolderPopupFun={closeFolderPopup}/>}
+      {showAddFolderPopup && <Add_Folder_Popup user={props.user} closeFolderPopupFun={closeFolderPopup}/>}
       <div className='side-bar'>
       { showDefaultSideBar && <div className='default'>
           <button className='compose-btn' onClick={()=>{
@@ -108,7 +128,7 @@ function App(props) {
             await loadEmails()
             setShowEmails(true)
           }} ><img src={inbox_img}/><div>Inbox</div></button>
-          <button className='default-btns' ><img src={star_img}/><div>Starred</div></button>
+          <button className='default-btns'><img src={star_img}/><div>Starred</div></button>
           <button className='default-btns'><img src={sent_img}/><div>Sent</div></button>
           <button className='default-btns'><img src={file_img}/><div>Drafts</div></button>
           <button className='default-btns'><img src={bin_img}/><div>Trash</div></button>

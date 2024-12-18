@@ -51,6 +51,33 @@ function Add_Folder_Popup(props){
         forceRender({})
     }
 
+    const addFolder = async () => {
+        const data = {
+            userId: props.user.current.id,
+            name: choosenData.current.name,
+            subjects: choosenData.current.subjects,
+            emails: ["j@g.c"]
+        }
+        console.log(data)
+        const url = 'http://localhost:8080/api/folders/add'
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                const result = await response.text();
+                console.log(result)
+            } 
+        } 
+        catch (error) {
+            console.error('Network error:', error);
+        }
+      }
+
     function Contacts_Menu() {
         return (
             <div className="popup-contacts">
@@ -94,7 +121,9 @@ function Add_Folder_Popup(props){
                 </div>
                 <div className="folder-name-input">
                     <p>Name</p>
-                    <input type="text"/>
+                    <input onChange={(e)=>{
+                        choosenData.current.name = e.target.value
+                    }} type="text"/>
                 </div>
                 <div className="input-field">
                     <p className="input-field-title">Subject</p>
@@ -140,7 +169,9 @@ function Add_Folder_Popup(props){
                     </button>
                 </div>
                 <div className="add-folder-dev">
-                    <button className="add-folder-button">Add Folder</button>
+                    <button onClick={()=>{
+                        addFolder()
+                    }} className="add-folder-button">Add Folder</button>
                 </div>
             </div>}
         </div>
