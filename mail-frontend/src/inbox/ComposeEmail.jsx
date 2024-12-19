@@ -8,8 +8,7 @@ function ComposeEmail(props) {
     const recipientsEmails = useRef(null)
     const subject = useRef(null)
     const body = useRef(null)
-    const priorityList = useRef(["LOW", "MID", "HIGH"])
-    const priorityIndx = useRef(0)
+    const priority = useRef("LOW")
     const [files, setFiles] = useState([])
 
     const submitEmail = async () => {
@@ -25,7 +24,7 @@ function ComposeEmail(props) {
                                 .filter(word => word.length > 0),
             subject: subject.current.value,
             body: body.current.value,
-            priority: priorityList.current[priorityIndx.current],
+            priority: priority.current,
             fileNames,
             fileTypes,
             fileSizes,
@@ -101,6 +100,18 @@ function ComposeEmail(props) {
                 submitEmail()
                 props.setShowComposeEmail(false)
             }}><img src="src/inbox/pics/send-message.png" alt="Icon" /></button>
+
+            <div className="choice">
+                <p>priority</p>
+                <select id="priority" name="priority" onChange={(e) => {
+                    priority.current = e.target.value
+                }}>
+                    <option value="LOW">LOW</option>
+                    <option value="MID">MID</option>
+                    <option value="HIGH">HIGH</option>
+                </select>
+            </div>
+
             <button onClick={() => document.getElementById('file-input').click()}
                 style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }} 
             >

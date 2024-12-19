@@ -152,8 +152,14 @@ function Inbox(props) {
             )}
             {isSortMenuVisible && (
                 <div className='sort-menu' ref={sortMenuRef}>
-                  <p>date</p>
-                  <p>priority</p>
+                  <p onClick={()=>{
+                    props.setSort("date")
+                    props.reload()
+                  }}>date</p>
+                  <p onClick={()=>{
+                    props.setSort("priority")
+                    props.reload()
+                  }}>priority</p>
                 </div>
             )}
             <div className='emailsDisplay'>

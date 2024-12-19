@@ -32,6 +32,8 @@ function App(props) {
   const [showEmails, setShowEmails] = useState(true);
   const [showFolder, setShowFolder] = useState(false);
 
+  const [sort, setSort] = useState("date")
+
   const loadEmails = useRef(()=>{})
   const filters = useRef({
     userId: props.user.current.id,
@@ -67,7 +69,7 @@ function App(props) {
 
   
   const loadInboxEmails = async () => {
-    const url = 'http://localhost:8080/api/receivers/inbox/' + props.user.current.id
+    const url = 'http://localhost:8080/api/receivers/inbox/' + props.user.current.id + '/' + sort
     console.log(url)
     try {
         const response = await fetch(url, {
@@ -88,7 +90,7 @@ function App(props) {
   }
 
   const loadTrashEmails = async () => {
-    const url = 'http://localhost:8080/api/receivers/trash/' + props.user.current.id
+    const url = 'http://localhost:8080/api/receivers/trash/' + props.user.current.id + '/' + sort
     console.log(url)
     try {
         const response = await fetch(url, {
@@ -109,7 +111,7 @@ function App(props) {
   }
 
   const loadSentEmails = async () => {
-    const url = 'http://localhost:8080/api/receivers/sent/' + props.user.current.id
+    const url = 'http://localhost:8080/api/receivers/sent/' + props.user.current.id + '/' + sort
     console.log(url)
     try {
         const response = await fetch(url, {
@@ -130,7 +132,7 @@ function App(props) {
   }
 
   const loadStarredEmails = async () => {
-    const url = 'http://localhost:8080/api/receivers/starred/' + props.user.current.id
+    const url = 'http://localhost:8080/api/receivers/starred/' + props.user.current.id + '/' + sort
     console.log(url)
     try {
         const response = await fetch(url, {
@@ -151,7 +153,7 @@ function App(props) {
   }
 
   const loadFilteredEmails = async () => {
-    const url = 'http://localhost:8080/api/receivers/filter/' + props.user.current.id
+    const url = 'http://localhost:8080/api/receivers/filter/' + props.user.current.id + '/' + sort
     console.log(url)
     console.log(filters.current)
     try {
@@ -302,7 +304,7 @@ function App(props) {
         <div className='main-app'>
           {showComposeEmail && <ComposeEmail user={props.user} setShowComposeEmail={setShowComposeEmail}/>}
           {showFolder && <Folder />}
-          {showEmails && <Inbox user={props.user} emails={emails} reload={loadEmails.current}/>}
+          {showEmails && <Inbox setSort={setSort} user={props.user} emails={emails} reload={loadEmails.current}/>}
         </div>
       </div>
     </div>

@@ -31,8 +31,8 @@ class PrioritySortingStrategy implements EmailSortingStrategy {
     @Override
     public List<ReceiverDTO> sort(List<ReceiverDTO> emails) {
         return emails.stream()
-                .sorted(Comparator.comparing((ReceiverDTO receiver) -> receiver.getEmail().getMetadata().getPriority())
-                                  .thenComparing(receiver -> receiver.getEmail().getMetadata().getDateSent()))
+                .sorted(Comparator.comparing((ReceiverDTO receiver) -> receiver.getEmail().getMetadata().getPriority()).reversed()
+                        .thenComparing(receiver -> receiver.getEmail().getMetadata().getDateSent(), Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
 }
@@ -42,7 +42,7 @@ class DateSortingStrategy implements EmailSortingStrategy {
     @Override
     public List<ReceiverDTO> sort(List<ReceiverDTO> emails) {
         return emails.stream()
-                .sorted(Comparator.comparing(receiver -> receiver.getEmail().getMetadata().getDateSent()))
+                .sorted(Comparator.comparing((ReceiverDTO receiver) -> receiver.getEmail().getMetadata().getDateSent()).reversed())
                 .collect(Collectors.toList());
     }
 }

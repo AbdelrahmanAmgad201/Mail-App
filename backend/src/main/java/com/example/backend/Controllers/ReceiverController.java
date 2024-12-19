@@ -42,38 +42,41 @@ public class ReceiverController {
         this.sentEmailService = sentEmailService;
     }
 
-    @GetMapping("/inbox/{userId}")
-    public ResponseEntity<List<ReceiverDTO>> getInboxEmails(@PathVariable Long userId) {
+    @GetMapping("/inbox/{userId}/{sort}")
+    public ResponseEntity<List<ReceiverDTO>> getInboxEmails(@PathVariable Long userId, @PathVariable String sort) {
         List<ReceiverDTO> emails = receiverService.getInboxEmails(userId);
-        return ResponseEntity.ok(filterEmailService.removeTrash(sortEmailsService.sort(emails, "date"), userId));
+        return ResponseEntity.ok(filterEmailService.removeTrash(sortEmailsService.sort(emails, sort), userId));
     }
 
-    @GetMapping("/trash/{userId}")
-    public ResponseEntity<List<ReceiverDTO>> getTrashEmails(@PathVariable Long userId) {
+    @GetMapping("/trash/{userId}/{sort}")
+    public ResponseEntity<List<ReceiverDTO>> getTrashEmails(@PathVariable Long userId, @PathVariable String sort) {
         List<ReceiverDTO> emails = allEmailService.getAllEmails(userId);
-        return ResponseEntity.ok(filterEmailService.getTrash(sortEmailsService.sort(emails, "date"), userId));
+        return ResponseEntity.ok(filterEmailService.getTrash(sortEmailsService.sort(emails, sort), userId));
     }
 
-    @GetMapping("/sent/{userId}")
-    public ResponseEntity<List<ReceiverDTO>> getSentEmails(@PathVariable Long userId) {
+    @GetMapping("/sent/{userId}/{sort}")
+    public ResponseEntity<List<ReceiverDTO>> getSentEmails(@PathVariable Long userId, @PathVariable String sort) {
         List<ReceiverDTO> sentEmails = sentEmailService.getSentEmails(userId);
-        return ResponseEntity.ok(filterEmailService.removeTrash(sortEmailsService.sort(sentEmails, "date"), userId));
+        return ResponseEntity.ok(filterEmailService.removeTrash(sortEmailsService.sort(sentEmails, sort), userId));
     }
     
-    @GetMapping("/starred/{userId}")
-    public ResponseEntity<List<ReceiverDTO>> getStarredEmails(@PathVariable Long userId) {
+    @GetMapping("/starred/{userId}/{sort}")
+    public ResponseEntity<List<ReceiverDTO>> getStarredEmails(@PathVariable Long userId, @PathVariable String sort) {
         List<ReceiverDTO> emails = allEmailService.getAllEmails(userId);
         return ResponseEntity.ok(
             filterEmailService.getStarred(
             filterEmailService.removeTrash(
-                sortEmailsService.sort(emails, "date"), userId), userId));
+                sortEmailsService.sort(emails, sort), userId), userId));
     }
 
-    @PostMapping("/filter/{userId}")
-    public ResponseEntity<?> signup(@RequestBody FilterDTO filterDTO) {
+    @PostMapping("/filter/{sort}")
+    public ResponseEntity<?> signup(@RequestBody FilterDTO filterDTO, @PathVariable String sort) {
         try {
             List<ReceiverDTO> emails = allEmailService.getAllEmails(filterDTO.getUserId());
-            return ResponseEntity.ok(filterEmailService.filter(emails, filterDTO));
+            return ResponseEntity.ok(
+                sortEmailsService.sort(
+                filterEmailService.filter(emails, filterDTO), sort)
+            );
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

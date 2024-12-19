@@ -72,4 +72,33 @@
         box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3),
                     0 4px 10px rgba(0, 0, 0, 0.25);
     }
+    .popup {
+        position: fixed;
+        top: 25%;
+        left:25%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 20px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .popup-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+    
+    .popup label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
     
