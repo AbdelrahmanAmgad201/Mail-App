@@ -92,7 +92,6 @@ function EmailOpen() {
                 </div>
             </div>
 
-
       </div>
 
     </div>

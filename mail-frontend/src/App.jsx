@@ -32,6 +32,19 @@ function App(props) {
   const [showEmails, setShowEmails] = useState(true);
   const [showFolder, setShowFolder] = useState(false);
 
+  const loadEmails = useRef(()=>{})
+  const filters = useRef({
+    userId: props.user.current.id,
+    subjects: [],
+    senders: [],
+    startDate: null,
+    endDate: null,
+    receivers: [],
+    priority: 'LOW',
+    body: "",
+    attachment: ""
+  })
+
   const [emails, setEmails] = useState([])
   const [folders, setFolders] = useState([])
 
@@ -52,7 +65,8 @@ function App(props) {
     setShowComposeEmail(false)
   }
 
-  const loadEmails = async () => {
+  
+  const loadInboxEmails = async () => {
     const url = 'http://localhost:8080/api/receivers/inbox/' + props.user.current.id
     console.log(url)
     try {
@@ -72,6 +86,70 @@ function App(props) {
         console.error('Network error:', error);
     }
   }
+
+  const loadTrashEmails = async () => {
+    const url = 'http://localhost:8080/api/receivers/trash/' + props.user.current.id
+    console.log(url)
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            setEmails(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
+
+  const loadSentEmails = async () => {
+    const url = 'http://localhost:8080/api/receivers/sent/' + props.user.current.id
+    console.log(url)
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            setEmails(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
+
+  const loadStarredEmails = async () => {
+    const url = 'http://localhost:8080/api/receivers/starred/' + props.user.current.id
+    console.log(url)
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            setEmails(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
+  
 
   const loadFolders = async () => {
     const url = 'http://localhost:8080/api/folders/user/' + props.user.current.id
@@ -93,8 +171,8 @@ function App(props) {
   }
 
   useEffect(() => { 
-    loadEmails() // load emails for default page inbox
-    loadFolders()
+    loadInboxEmails()
+    loadEmails.current = loadInboxEmails
 
     const handleOutsideClick = (event) => {
       if (filterDivRef.current && !filterDivRef.current.contains(event.target)) {
@@ -125,13 +203,33 @@ function App(props) {
 
           <button className='default-btns' onClick={async ()=>{
             closeALLApps()
-            await loadEmails()
+            await loadInboxEmails()
+            loadEmails.current = loadInboxEmails
             setShowEmails(true)
           }} ><img src={inbox_img}/><div>Inbox</div></button>
-          <button className='default-btns'><img src={star_img}/><div>Starred</div></button>
-          <button className='default-btns'><img src={sent_img}/><div>Sent</div></button>
+
+          <button className='default-btns' onClick={async ()=>{
+            closeALLApps()
+            await loadStarredEmails()
+            loadEmails.current = loadStarredEmails
+            setShowEmails(true)
+          }}><img src={star_img}/><div>Starred</div></button>
+
+          <button className='default-btns' onClick={async ()=>{
+            closeALLApps()
+            await loadSentEmails()
+            loadEmails.current = loadSentEmails
+            setShowEmails(true)
+          }}><img src={sent_img}/><div>Sent</div></button>
+
           <button className='default-btns'><img src={file_img}/><div>Drafts</div></button>
-          <button className='default-btns'><img src={bin_img}/><div>Trash</div></button>
+
+          <button className='default-btns' onClick={async ()=>{
+            closeALLApps()
+            await loadTrashEmails()
+            loadEmails.current = loadTrashEmails
+            setShowEmails(true)
+          }}><img src={bin_img}/><div>Trash</div></button>
 
           <button className='contacts-btn' onClick={() => {
             setShowContactMenu(true)
@@ -147,7 +245,7 @@ function App(props) {
           </div>
         </div>}
 
-        {showContactMenu && <ContactMenu closeMenu={closeContactMenu}/>}
+        {showContactMenu && <ContactMenu closeMenu={closeContactMenu} user={props.user}/>}
 
       </div>
 
@@ -162,7 +260,7 @@ function App(props) {
           </div>
           {showFilterMenu && (
                 <div className='filter-options' ref={filterDivRef}>
-                  <SearchFilter />
+                  <SearchFilter filters={filters}/>
                   <button className='btn-search' onClick={toggleFilterMenu}>Search</button>
                 </div>
           )}
@@ -171,7 +269,7 @@ function App(props) {
         <div className='main-app'>
           {showComposeEmail && <ComposeEmail user={props.user}/>}
           {showFolder && <Folder />}
-          {showEmails && <Inbox emails={emails} reload={loadEmails}/>}
+          {showEmails && <Inbox user={props.user} emails={emails} reload={loadEmails.current}/>}
         </div>
       </div>
     </div>

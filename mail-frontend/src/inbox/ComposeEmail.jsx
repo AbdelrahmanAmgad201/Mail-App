@@ -7,6 +7,8 @@ function ComposeEmail(props) {
     const recipientsEmails = useRef(null)
     const subject = useRef(null)
     const body = useRef(null)
+    const priorityList = useRef(["LOW", "MID", "HIGH"])
+    const priorityIndx = useRef(0)
 
     const submitEmail = async () => {
         const data = {
@@ -16,7 +18,7 @@ function ComposeEmail(props) {
                                 .filter(word => word.length > 0),
             subject: subject.current.value,
             body: body.current.value,
-            priority: "LOW"
+            priority: priorityList.current[priorityIndx.current]
         }
         console.log(data)
         const url = 'http://localhost:8080/api/emails/send'
@@ -61,7 +63,10 @@ function ComposeEmail(props) {
             submitEmail()
         }}><img src="src/inbox/pics/send-message.png" alt="Icon" /></button>
         <button><img src="src/inbox/pics/attach-document.png" alt="Icon" /></button>
-        <button><img src="src/inbox/pics/image.png" alt="Icon" /></button>
+        <button onClick={()=>{
+            priorityIndx.current = (priorityIndx.current + 1) % 3
+            console.log(priorityList.current[priorityIndx.current])
+        }}><img src="src/app-assets/appIcons/priority.png" alt="Icon" /></button>
        </div>
 
     </div>

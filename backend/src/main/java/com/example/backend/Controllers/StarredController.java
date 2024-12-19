@@ -15,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/starred")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class StarredController {
     private final StarredService starredService;
 

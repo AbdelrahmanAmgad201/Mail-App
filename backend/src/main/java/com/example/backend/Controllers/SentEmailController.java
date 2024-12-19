@@ -14,11 +14,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class SentEmailController {
 
-    private final SentEmailService sentEmailService;
+    // private final SentEmailService sentEmailService;
 
-    @GetMapping("/sent/{userId}")
-    public ResponseEntity<List<ReceiverDTO>> getSentEmails(@PathVariable Long userId) {
-        List<ReceiverDTO> sentEmails = sentEmailService.getSentEmails(userId);
-        return ResponseEntity.ok(sentEmails);
-    }
+    // @GetMapping("/sent/{userId}")
+    // public ResponseEntity<List<ReceiverDTO>> getSentEmails(@PathVariable Long userId) {
+    //     List<ReceiverDTO> sentEmails = sentEmailService.getSentEmails(userId);
+    //     return ResponseEntity.ok(sentEmails);
+    // }
 }

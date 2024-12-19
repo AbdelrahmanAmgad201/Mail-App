@@ -84,9 +84,8 @@ function Inbox(props) {
                 </div>
             )}
             <div className='emailsDisplay'>
-              {/* Dynamically render Email components */}
-              {props.emails.map((big) => (
-                <Email key={big.email.emailId} subject={big.email.subject} sender={big.email.sender.emailAddress} date={big.email.metadata.dateSent}/>
+              {props.emails.map((allEmail, index) => (
+                <Email key={index} allEmail={allEmail} user={props.user} reload={props.reload}/>
               ))}
             </div>
 

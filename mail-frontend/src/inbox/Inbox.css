@@ -59,8 +59,6 @@ box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 
 }
 
-
-
 .selection-bar button img {
 width: 70%;
 height: auto;
@@ -285,4 +283,6 @@ object-fit: contain;
 
 .emailsDisplay{
     position: fixed;
+    height: 80vh;
+    overflow-y: auto;
 }

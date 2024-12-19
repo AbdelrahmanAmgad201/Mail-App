@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/emails")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class TrashController {
     private final TrashService trashService;
 

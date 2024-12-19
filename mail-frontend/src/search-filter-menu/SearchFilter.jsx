@@ -2,7 +2,7 @@ import { useEffect,useState} from "react"
 import "./SearchFilter.css"
 
 
-function SearchFilter(){
+function SearchFilter(props){
     const [subjects, setSubjects] = useState([]);
     const [newSubject, setNewSubject] = useState("");
     const [receivers, setReceivers] = useState([])
@@ -56,10 +56,16 @@ function SearchFilter(){
             {<div className="filter-content">
 
                 <div className="choice">
-                    <p>Date</p>
+                    <p>start date</p>
+                    <input type="text" onChange={(e)=>{
+                        props.filters.s
+                    }}/>
+                </div>
+
+                <div className="choice">
+                    <p>end date</p>
                     <input type="text"/>
                 </div>
-                
 
                 <div className="input-field">
                     <p className="input-field-title">subject</p>
@@ -86,7 +92,6 @@ function SearchFilter(){
                         />                    </div>
                     <button className="add-button"  onClick={handleAddSubject}><img src="src/app-assets/appIcons/plus.png"/></button>
                 </div>
-
 
                 <div className="input-field">
                     <p className="input-field-title">receivers</p>
