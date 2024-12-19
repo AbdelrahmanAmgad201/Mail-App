@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import './EmailOpen.css';
+import UploadedFilesOpenEmail from './uploadedFile.jsx';
 
 
 function EmailOpen(props) {
@@ -145,6 +146,14 @@ function EmailOpen(props) {
                     <button>reply</button>
                     <button>forward</button>
                 </div> */}
+                <div>
+                  <h3>Attachments:</h3>
+                      <ul>
+                          {props.mail.current.email.attachments.map((file, index) => (
+                              <UploadedFilesOpenEmail key={index} file={file}/>
+                          ))}
+                      </ul>
+                </div>
             </div>
 
       </div>

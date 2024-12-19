@@ -96,31 +96,31 @@ function ComposeEmail(props) {
 
        </div>
 
-       <div className='email-bottom-bar'>
-        <button onClick={async () => {
-            submitEmail()
-            props.setShowComposeEmail(false)
-        }}><img src="src/inbox/pics/send-message.png" alt="Icon" /></button>
-        <button onClick={() => document.getElementById('file-input').click()}
-            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }} 
-        >
-            <img src="src/inbox/pics/attach-document.png" alt="Icon" />
-        </button>
-        <input
-            type="file"
-            id="file-input"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-        />
-        <div>
-            <h3>Uploaded Files:</h3>
-                <ul>
-                    {files.map((file, index) => (
-                        <UploadedFiles key={index} file = {file}  onRemove={() =>handleRemoveFile(index)}/>
-                    ))}
-                </ul>
-            </div>
+        <div className='email-bottom-bar'>
+            <button onClick={async () => {
+                submitEmail()
+                props.setShowComposeEmail(false)
+            }}><img src="src/inbox/pics/send-message.png" alt="Icon" /></button>
+            <button onClick={() => document.getElementById('file-input').click()}
+                style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }} 
+            >
+                <img src="src/inbox/pics/attach-document.png" alt="Icon" />
+            </button>
+            <input
+                type="file"
+                id="file-input"
+                multiple
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+            />
+                <div>
+                    <h3>Uploaded Files:</h3>
+                        <ul>
+                            {files.map((file, index) => (
+                                <UploadedFiles key={index} file = {file}  onRemove={() =>handleRemoveFile(index)}/>
+                            ))}
+                        </ul>
+                </div>
        </div>
 
     </div>
