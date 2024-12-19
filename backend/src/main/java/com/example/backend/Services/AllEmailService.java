@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,11 +54,19 @@ public class AllEmailService {
                 .collect(Collectors.toList());
     }
 
+    private List<ReceiverDTO.AttachmentDTO> mapToAttachmentDTOs(Set<Attachment> attachments) {
+        return attachments.stream()
+                .map(attachment -> ReceiverDTO.AttachmentDTO.builder()
+                        .attachmentId(attachment.getAttachmentId())
+                        .fileName(attachment.getFileName())
+                        .fileType(attachment.getFileType())
+                        .fileSize(attachment.getFileSize())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
     private ReceiverDTO createSentEmailDTO(Email email, User currentUser) {
-        // Find all receivers for this email
         List<Receiver> allReceivers = receiverRepository.findByEmail(email);
-
-
         boolean isStarred = starredRepository.findByUserAndEmail(currentUser, email)
                 .isPresent();
 
@@ -68,6 +77,7 @@ public class AllEmailService {
                         .body(email.getBody())
                         .sender(mapToUserDTO(email.getSender()))
                         .metadata(mapToEmailMetadataDTO(email.getMetadata()))
+                        .attachments(mapToAttachmentDTOs(email.getAttachments()))  // Add this line
                         .build())
                 .receivers(allReceivers.stream()
                         .map(r -> mapToUserDTO(r.getReceiver()))
@@ -77,10 +87,7 @@ public class AllEmailService {
     }
 
     private ReceiverDTO createReceivedEmailDTO(Receiver receiver, User currentUser) {
-        // Find all receivers for this email
         List<Receiver> allReceivers = receiverRepository.findByEmail(receiver.getEmail());
-
-        // Check if the email is starred
         boolean isStarred = starredRepository.findByUserAndEmail(currentUser, receiver.getEmail())
                 .isPresent();
 
@@ -92,6 +99,7 @@ public class AllEmailService {
                         .body(receiver.getEmail().getBody())
                         .sender(mapToUserDTO(receiver.getEmail().getSender()))
                         .metadata(mapToEmailMetadataDTO(receiver.getEmail().getMetadata()))
+                        .attachments(mapToAttachmentDTOs(receiver.getEmail().getAttachments()))  // Add this line
                         .build())
                 .receivers(allReceivers.stream()
                         .map(r -> mapToUserDTO(r.getReceiver()))
