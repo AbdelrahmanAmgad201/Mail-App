@@ -32,6 +32,18 @@ public class ReceiverDTO {
         private String body;
         private UserDTO sender;
         private EmailMetadataDTO metadata;
+        private List<AttachmentDTO> attachments;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AttachmentDTO {
+        private Long attachmentId;
+        private String fileName;
+        private String fileType;
+        private Long fileSize;
     }
 
     @Data
