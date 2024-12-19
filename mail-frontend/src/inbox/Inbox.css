@@ -1,3 +1,8 @@
+.emails-list {
+    width: 100%;
+    height: 100%;
+}
+
 .emails-bar {
 display: flex;
 flex-direction: column;
@@ -80,9 +85,9 @@ box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .email-card p {
-width: 100%;
-margin: 0px;
-transition: box-shadow 0.3s ease-in-out;
+    width: 100%;
+    margin: 0px;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .email-card p:hover {
@@ -285,4 +290,10 @@ object-fit: contain;
     position: fixed;
     height: 80vh;
     overflow-y: auto;
+}
+
+.open-email-button {
+    width: 100%;
+    margin: 0px;
+    transition: box-shadow 0.3s ease-in-out;
 }

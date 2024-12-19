@@ -72,7 +72,7 @@
     }
     
     .menus-email-toggling .select-menu{
-        width:100px;
+        width: 500px;
         height:fit-content;
         background-color: white;
         position: relative;
@@ -139,7 +139,7 @@
         width:100%;
         height:90%;
         position:fixed;
-      
+        padding: 10px;
     }
 
     .email-body p{

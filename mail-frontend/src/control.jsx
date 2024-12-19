@@ -7,7 +7,7 @@ function Control() {
     const [showApp, setShowApp] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegistration, setShowRegistration] = useState(false)
-    const user = useRef({id:""})
+    const user = useRef({id:"", email:""})
 
     const closeAllPages = () => {
       setShowApp(false)

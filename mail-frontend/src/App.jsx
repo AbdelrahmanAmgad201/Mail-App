@@ -3,7 +3,7 @@ import './app-assets/App.css'
 import './app-assets/SideBar.css'
 import './app-assets/TopBar.css'
 import star_img from "./app-assets/appIcons/star.png"
-import colored_star_img from "./app-assets/appIcons/colored_star.png"
+import empty_star_img from "./app-assets/appIcons/star-empty.png"
 import sent_img from "./app-assets/appIcons/sent.png"
 import inbox_img from "./app-assets/appIcons/inbox.png"
 import file_img from "./app-assets/appIcons/file.png"
@@ -237,7 +237,7 @@ function App(props) {
             await loadStarredEmails()
             loadEmails.current = loadStarredEmails
             setShowEmails(true)
-          }}><img src={star_img}/><div>Starred</div></button>
+          }}><img src={empty_star_img}/><div>Starred</div></button>
 
           <button className='default-btns' onClick={async ()=>{
             closeALLApps()
@@ -280,7 +280,9 @@ function App(props) {
               console.log(filters.current)
               loadFilteredEmails()
             }}><img src={search_img}/></button>
-            <input type='text' placeholder='Search' />
+            <input type='text' placeholder='Search' onChange={(e)=>{
+              filters.current.body = e.target.value
+            }}/>
             <div className='filter-div' >
                 <button className='filter-img' onClick={toggleFilterMenu}><img src={filter_img}/></button>
             </div>
@@ -295,7 +297,7 @@ function App(props) {
                   }}>Search</button>
                 </div>
           )}
-          <div className='user-email'>{props.email}</div>
+          <div className='user-email'>{props.user.current.email}</div>
         </div>
         <div className='main-app'>
           {showComposeEmail && <ComposeEmail user={props.user}/>}

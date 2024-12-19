@@ -50,7 +50,7 @@ function Email(props) {
   }, [])
 
   return (
-    <div className='email-card'>
+    <div className='email-card' >
       
       <button> <img src="src/inbox/pics/stop.png" alt="Icon" /></button>
 
@@ -67,7 +67,10 @@ function Email(props) {
 
       <p>{props.allEmail.email.sender.emailAddress}</p>
 
-      <p>{props.allEmail.email.subject}</p>
+      <p onClick={()=>{
+        props.openedMailRef.current = props.allEmail
+        props.setShowOpenEmail(true)
+      }}>{props.allEmail.email.subject}</p>
 
       <p>{props.allEmail.email.metadata.dateSent}</p>
 
