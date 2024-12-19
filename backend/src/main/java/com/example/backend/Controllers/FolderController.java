@@ -1,43 +1,32 @@
 package com.example.backend.Controllers;
 
+import com.example.backend.Entities.FolderOwner;
+import com.example.backend.Services.FolderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.backend.DTO.FolderRequest;
-// import com.example.backend.Services.FolderService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/folders")
-@CrossOrigin(origins = "http://localhost:5173")
 public class FolderController {
 
-    // private final FolderService folderService;
+    private final FolderService folderService;
 
-    // public FolderController(FolderService folderService) {
-    //     this.folderService = folderService;
-    // }
-
-    // Endpoint to get all folders for a specific user
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getFoldersByUser(@PathVariable Long userId) {
-        System.out.println(userId);
-        return ResponseEntity.ok("not implemented");
+    public FolderController(FolderService folderService) {
+        this.folderService = folderService;
     }
 
-    // Endpoint to add folder for a specific user
-    @PostMapping("/add")
-    public ResponseEntity<?> getFoldersByUser(@RequestBody FolderRequest folderRequest) {
-        System.out.println(folderRequest.getName());
-        System.out.println(folderRequest.getSubjects());
-        return ResponseEntity.ok("not implemented");
-    }
-
-    // Endpoint to get all emails in a folder with filters
-    @GetMapping("/{folderId}/emails")
-    public ResponseEntity<?> getEmailsInFolder(
-            @PathVariable Long folderId,
-            @RequestParam Long userId,
-            @RequestParam(required = false) String subject
-    ) {
-        return ResponseEntity.ok("not implemented");
+    @PostMapping("/create-with-filters")
+    public ResponseEntity<?> createFolderWithFilters(@RequestParam Long userId,
+                                                     @RequestParam String folderName,
+                                                     @RequestParam List<String> subjectFilters,
+                                                     @RequestParam List<Long> memberIds) {
+        try {
+            FolderOwner folder = folderService.createFolderWithFilters(userId, folderName, subjectFilters, memberIds);
+            return ResponseEntity.ok(folder);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
