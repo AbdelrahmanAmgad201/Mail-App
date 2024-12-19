@@ -1,11 +1,13 @@
 package com.example.backend.Services;
 
+import com.example.backend.DTO.DraftUpdateDTO;
 import com.example.backend.DTO.SendEmailRequestDTO;
 import com.example.backend.Entities.*;
 import com.example.backend.Repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -187,5 +189,116 @@ public class EmailSendingService {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+    public Email updateDraft(DraftUpdateDTO updateRequest) {
+        // Find the draft email
+        Email draft = emailRepository.findById(updateRequest.getDraftId())
+                .orElseThrow(() -> new RuntimeException("Draft not found"));
+
+        // Verify it's actually a draft
+        if (!Boolean.TRUE.equals(draft.getMetadata().getIsDraft())) {
+            throw new IllegalStateException("Email is not a draft");
+        }
+
+        // Update basic fields if provided
+        if (updateRequest.getSubject() != null) {
+            draft.setSubject(updateRequest.getSubject());
+        }
+        if (updateRequest.getBody() != null) {
+            draft.setBody(updateRequest.getBody());
+        }
+
+        // Update priority if provided
+        if (updateRequest.getPriority() != null) {
+            Priority priority;
+            try {
+                priority = Priority.valueOf(updateRequest.getPriority().toUpperCase());
+                draft.getMetadata().setPriority(priority);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid priority: " + updateRequest.getPriority());
+            }
+        }
+
+        // Handle receivers update if provided
+        if (updateRequest.getReceiverEmails() != null) {
+            // Remove old receivers
+            receiverRepository.deleteAll(draft.getReceivers());
+            draft.getReceivers().clear();
+
+            // Add new receivers
+            Set<Receiver> newReceivers = new HashSet<>();
+            for (String receiverEmail : updateRequest.getReceiverEmails()) {
+                if (!isValidEmailAddress(receiverEmail)) {
+                    throw new IllegalArgumentException("Invalid email address: " + receiverEmail);
+                }
+
+                User receiver = userRepository.findByEmailAddress(receiverEmail)
+                        .orElseGet(() -> createNewUser(receiverEmail));
+
+                Receiver receiverEntity = Receiver.builder()
+                        .email(draft)
+                        .receiver(receiver)
+                        .isRead(false)
+                        .isTrashed(false)
+                        .build();
+
+                newReceivers.add(receiverRepository.save(receiverEntity));
+            }
+            draft.setReceivers(newReceivers);
+        }
+
+        // Handle attachments update if provided
+        if (updateRequest.getFileNames() != null && !updateRequest.getFileNames().isEmpty()) {
+            // Remove old attachments
+            for (Attachment oldAttachment : draft.getAttachments()) {
+                try {
+                    // Delete physical file
+                    Path filePath = Paths.get("./backend/attachments/", oldAttachment.getFileName());
+                    Files.deleteIfExists(filePath);
+                } catch (IOException e) {
+                    System.err.println("Failed to delete old attachment file: " + e.getMessage());
+                }
+            }
+            attachmentRepository.deleteAll(draft.getAttachments());
+            draft.getAttachments().clear();
+
+            // Add new attachments
+            Set<Attachment> newAttachments = new HashSet<>();
+            for (int i = 0; i < updateRequest.getFileNames().size(); i++) {
+                try {
+                    String fileName = updateRequest.getFileNames().get(i);
+                    String fileType = updateRequest.getFileTypes().get(i);
+                    Long fileSize = Long.parseLong(updateRequest.getFileSizes().get(i));
+                    byte[] content = updateRequest.getContent().get(i);
+
+                    // Save file
+                    Path directoryPath = Paths.get("./backend/attachments");
+                    Path filePath = directoryPath.resolve(fileName);
+                    Files.write(filePath, content);
+
+                    // Create attachment
+                    Attachment attachment = Attachment.builder()
+                            .fileName(fileName)
+                            .fileType(fileType)
+                            .fileSize(fileSize)
+                            .email(draft)
+                            .build();
+
+                    newAttachments.add(attachmentRepository.save(attachment));
+                } catch (Exception e) {
+                    throw new RuntimeException("Failed to save attachment: " + e.getMessage());
+                }
+            }
+            draft.setAttachments(newAttachments);
+        }
+
+        // Update draft status
+        if (!Boolean.TRUE.equals(updateRequest.getKeepAsDraft())) {
+            draft.getMetadata().setIsDraft(false);
+            draft.getMetadata().setDateSent(LocalDateTime.now());
+        }
+
+        return emailRepository.save(draft);
     }
 }
