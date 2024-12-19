@@ -52,7 +52,15 @@ function Email(props) {
   return (
     <div className='email-card' >
       
-      <button> <img src="src/inbox/pics/stop.png" alt="Icon" /></button>
+      <button onClick={()=>{
+        props.selectMailAction(props.allEmail)
+      }}> 
+      {!(props.selectedMails.findIndex(item => item.email.emailId === props.allEmail.email.emailId) > -1) ? (
+          <img src="src/inbox/pics/check-box-empty.png" alt="Icon" />
+        ) : (
+          <img src="src/inbox/pics/check-box.png" alt="Icon" />
+        )}
+      </button>
 
       <button onClick={async () => {
         await toggleEmailStar()

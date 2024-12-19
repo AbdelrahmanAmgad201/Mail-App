@@ -300,7 +300,7 @@ function App(props) {
           <div className='user-email'>{props.user.current.email}</div>
         </div>
         <div className='main-app'>
-          {showComposeEmail && <ComposeEmail user={props.user}/>}
+          {showComposeEmail && <ComposeEmail user={props.user} setShowComposeEmail={setShowComposeEmail}/>}
           {showFolder && <Folder />}
           {showEmails && <Inbox user={props.user} emails={emails} reload={loadEmails.current}/>}
         </div>

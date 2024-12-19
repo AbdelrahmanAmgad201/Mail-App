@@ -10,7 +10,7 @@ function ComposeEmail(props) {
     const body = useRef(null)
     const priorityList = useRef(["LOW", "MID", "HIGH"])
     const priorityIndx = useRef(0)
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState([])
 
     const submitEmail = async () => {
         const fileNames = files.map((file) => file.name);
@@ -59,7 +59,6 @@ function ComposeEmail(props) {
     
             reader.onloadend = () => {
                 const base64Content = reader.result.split(',')[1]; // Extract base64 content from the data URL
-    
                 
                 const fileData = {
                     file: file,
@@ -100,13 +99,13 @@ function ComposeEmail(props) {
        <div className='email-bottom-bar'>
         <button onClick={async () => {
             submitEmail()
+            props.setShowComposeEmail(false)
         }}><img src="src/inbox/pics/send-message.png" alt="Icon" /></button>
         <button onClick={() => document.getElementById('file-input').click()}
             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }} 
         >
             <img src="src/inbox/pics/attach-document.png" alt="Icon" />
         </button>
-        <button><img src="src/inbox/pics/image.png" alt="Icon" /></button>
         <input
             type="file"
             id="file-input"

@@ -8,10 +8,27 @@ function Inbox(props) {
   const [isSortMenuVisible, setSortMenuVisible] = useState(false)
   const [showOpenEmail, setShowOpenEmail] = useState(false)
 
-  const selectedMails = useRef([])
   const openedMailRef = useRef(null)
   const dropdownRef = useRef(null)
   const sortMenuRef = useRef(null)
+  
+  
+  const [selectedMails, setSelectedMails] = useState([]);
+
+  const selectMailAction = (mail) => {
+    setSelectedMails((prevSelectedMails) => {
+      // Find the index of the mail
+      const index = prevSelectedMails.findIndex(item => item.email.emailId === mail.email.emailId);
+
+      if (index > -1) {
+        // If mail exists, remove it
+        return prevSelectedMails.filter((_, i) => i !== index);
+      } else {
+        // If mail doesn't exist, add it
+        return [...prevSelectedMails, mail];
+      }
+    });
+  };
 
   const handleClickOutside = (event) => {
     if (
@@ -51,11 +68,41 @@ function Inbox(props) {
     }
   };
 
+  const deleteEmail = async (mail) => {
+    const url = 'http://localhost:8080/api/emails/trash/' + props.user.current.id + '/' + mail.email.emailId
+    console.log(url)
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            const result = await response.text();
+            console.log(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
+
   return (
     <div className='emails-bar'>
       {!showOpenEmail && <div className='emails-list'>
         <div className='selection-bar'>
             <div className='select-btn'>
+              {(selectedMails.length > 0) && 
+                <button onClick={async ()=>{
+                  await selectedMails.map(async (mail) => {
+                    await deleteEmail(mail)
+                  })
+                  setSelectedMails([])
+                }}>
+                  <img src="src/inbox/pics/recycle-bin.png"/>
+                </button>
+              }
               <button>
                 <img src="src/inbox/pics/stop.png" alt="Icon" />
               </button>
@@ -74,12 +121,33 @@ function Inbox(props) {
           <div className='menus-toggling'>
             {isDropdownVisible && (
                     <div className='select-menu' ref={dropdownRef}>
-                      <p>all</p>
-                      <p>none</p>
-                      <p>starred</p>
-                      <p>unstarred</p>
-                      <p>read</p>
-                      <p>unread</p>
+                      <p onClick={()=>{
+                        setSelectedMails(props.emails)
+                        setDropdownVisible(false);
+                      }}>all</p>
+                      <p onClick={()=>{
+                        setSelectedMails([])
+                        setDropdownVisible(false);
+                      }}>none</p>
+                      <p onClick={()=>{
+                        let newSelectedEmails = []
+                        props.emails.map((mail, index)=>{
+                          console.log(index, mail.isStarred)
+                          if (mail.isStarred) 
+                            newSelectedEmails.push(mail)
+                        })
+                        setSelectedMails(newSelectedEmails)
+                        setDropdownVisible(false);
+                      }}>starred</p>
+                      <p onClick={() => {
+                        let newSelectedEmails = []
+                        props.emails.map((mail)=>{
+                          if (mail.isStarred == null || mail.isStarred == false) 
+                            newSelectedEmails.push(mail)
+                        })
+                        setSelectedMails(newSelectedEmails)
+                        setDropdownVisible(false);
+                      }}>unstarred</p>
                     </div>
             )}
             {isSortMenuVisible && (
@@ -90,7 +158,7 @@ function Inbox(props) {
             )}
             <div className='emailsDisplay'>
               {props.emails.map((allEmail, index) => (
-                <Email key={index} allEmail={allEmail} user={props.user} reload={props.reload} setShowOpenEmail={setShowOpenEmail} openedMailRef={openedMailRef}/>
+                <Email key={index} allEmail={allEmail} user={props.user} reload={props.reload} setShowOpenEmail={setShowOpenEmail} openedMailRef={openedMailRef} selectedMails={selectedMails} selectMailAction={selectMailAction}/>
               ))}
             </div>
         </div>
