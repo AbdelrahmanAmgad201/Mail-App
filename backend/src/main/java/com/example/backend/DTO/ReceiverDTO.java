@@ -68,5 +68,6 @@ public class ReceiverDTO {
         private Priority priority;
         private Boolean isSpam;
         private LocalDateTime dateSent;
+        private Boolean isDraft;
     }
 }

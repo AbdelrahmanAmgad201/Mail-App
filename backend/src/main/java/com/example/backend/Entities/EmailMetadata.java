@@ -36,6 +36,9 @@ public class EmailMetadata {
     @Column(name = "date_sent", nullable = false)
     private LocalDateTime dateSent;
 
+    @Column(name = "is_draft")  // Add this field
+    private Boolean isDraft;
+
     @OneToOne(mappedBy = "metadata")
     @JsonIgnore
     private Email email;

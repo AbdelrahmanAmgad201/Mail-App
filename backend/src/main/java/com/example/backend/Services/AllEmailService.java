@@ -129,6 +129,7 @@ public class AllEmailService {
                 .priority(metadata.getPriority())
                 .isSpam(metadata.getIsSpam())
                 .dateSent(metadata.getDateSent())
+                .isDraft(metadata.getIsDraft())
                 .build();
     }
 }
