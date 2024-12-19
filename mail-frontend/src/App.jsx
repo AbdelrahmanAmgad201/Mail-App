@@ -37,8 +37,8 @@ function App(props) {
     userId: props.user.current.id,
     subjects: [],
     senders: [],
-    startDate: null,
-    endDate: null,
+    startDate: "",
+    endDate: "",
     receivers: [],
     priority: 'LOW',
     body: "",
@@ -149,6 +149,29 @@ function App(props) {
         console.error('Network error:', error);
     }
   }
+
+  const loadFilteredEmails = async () => {
+    const url = 'http://localhost:8080/api/receivers/filter/' + props.user.current.id
+    console.log(url)
+    console.log(filters.current)
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filters.current)
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            setEmails(result)
+        } 
+    } 
+    catch (error) {
+        console.error('Network error:', error);
+    }
+  }
   
 
   const loadFolders = async () => {
@@ -173,6 +196,7 @@ function App(props) {
   useEffect(() => { 
     loadInboxEmails()
     loadEmails.current = loadInboxEmails
+    console.log(filters)
 
     const handleOutsideClick = (event) => {
       if (filterDivRef.current && !filterDivRef.current.contains(event.target)) {
@@ -252,7 +276,10 @@ function App(props) {
       <div className='main-body'>
         <div className='top-bar'>
           <div className='search-bar'>
-            <button className='search-img'><img src={search_img}/></button>
+            <button className='search-img' onClick={()=>{
+              console.log(filters.current)
+              loadFilteredEmails()
+            }}><img src={search_img}/></button>
             <input type='text' placeholder='Search' />
             <div className='filter-div' >
                 <button className='filter-img' onClick={toggleFilterMenu}><img src={filter_img}/></button>
@@ -261,7 +288,11 @@ function App(props) {
           {showFilterMenu && (
                 <div className='filter-options' ref={filterDivRef}>
                   <SearchFilter filters={filters}/>
-                  <button className='btn-search' onClick={toggleFilterMenu}>Search</button>
+                  <button className='btn-search' onClick={()=>{
+                    // toggleFilterMenu()
+                    console.log(filters.current)
+                    loadFilteredEmails()
+                  }}>Search</button>
                 </div>
           )}
           <div className='user-email'>{props.email}</div>

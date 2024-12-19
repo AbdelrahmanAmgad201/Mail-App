@@ -25,8 +25,7 @@ function ComposeEmail(props) {
                                 .filter(word => word.length > 0),
             subject: subject.current.value,
             body: body.current.value,
-            priority: priorityList.current[priorityIndx.current]
-            priority: "LOW",
+            priority: priorityList.current[priorityIndx.current],
             fileNames,
             fileTypes,
             fileSizes,

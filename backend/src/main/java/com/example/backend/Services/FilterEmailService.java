@@ -6,20 +6,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import com.example.backend.DTO.FilterDTO;
+import java.time.format.DateTimeFormatter;
 
 class DateFilter {
-    public List<ReceiverDTO> filter(List<ReceiverDTO> receiverList, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ReceiverDTO> filter(List<ReceiverDTO> receiverList, String startDate, String endDate) {
         // If both startDate and endDate are null, return everything
-        if (startDate == null || endDate == null) {
+        if (startDate.equals("") || endDate.equals("")) {
             return receiverList;
         }
+        LocalDateTime startDateTime = LocalDateTime.parse(startDate);
+        LocalDateTime endDateTime = LocalDateTime.parse(endDate);
 
         return receiverList.stream()
                             .filter(receiver -> receiver.getEmail() != null && receiver.getEmail().getMetadata() != null)
                             .filter(receiver -> {
                                 LocalDateTime dateSent = receiver.getEmail().getMetadata().getDateSent();
-                                return (startDate == null || dateSent.isAfter(startDate)) &&
-                                    (endDate == null || dateSent.isBefore(endDate));
+                                return (startDate == null || dateSent.isAfter(startDateTime)) &&
+                                    (endDate == null || dateSent.isBefore(endDateTime));
                             })
                             .collect(Collectors.toList());
     }
@@ -190,11 +193,11 @@ public class FilterEmailService {
         PriorityFilter priorityFilter = new PriorityFilter();
         BodyFilter bodyFilter = new BodyFilter();
         List<ReceiverDTO> filteredEmails = dateFilter.filter(emails, filterDTO.getStartDate(), filterDTO.getEndDate());
-        filteredEmails = subjectFilter.filter(emails, filterDTO.getSubjects());
-        filteredEmails = receiversFilter.filter(emails, filterDTO.getReceivers());
-        filteredEmails = sendersFilter.filter(emails, filterDTO.getSenders());
-        filteredEmails = priorityFilter.filter(emails, filterDTO.getPriority());
-        filteredEmails = bodyFilter.filter(emails, filterDTO.getBody());
+        filteredEmails = subjectFilter.filter(filteredEmails, filterDTO.getSubjects());
+        filteredEmails = receiversFilter.filter(filteredEmails, filterDTO.getReceivers());
+        filteredEmails = sendersFilter.filter(filteredEmails, filterDTO.getSenders());
+        filteredEmails = priorityFilter.filter(filteredEmails, filterDTO.getPriority());
+        filteredEmails = bodyFilter.filter(filteredEmails, filterDTO.getBody());
         return filteredEmails;
     }
 

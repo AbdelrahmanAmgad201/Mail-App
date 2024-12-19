@@ -16,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class FilterDTO {
     private long userId;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private List<String> receivers;
     private List<String> senders;
     private List<String> subjects;
