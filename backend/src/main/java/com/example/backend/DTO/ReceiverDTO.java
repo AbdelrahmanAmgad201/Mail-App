@@ -22,6 +22,16 @@ public class ReceiverDTO {
     private Boolean isTrashed;
     private Date dateTrashed;
 
+    public ReceiverDTO(ReceiverDTO other) {
+        this.id = other.id;
+        this.email = other.email != null ? new EmailDTO(other.email) : null;
+        this.receivers = other.receivers != null ? List.copyOf(other.receivers) : null; // Shallow copy of the list
+        this.isStarred = other.isStarred;
+        this.isRead = other.isRead;
+        this.isTrashed = other.isTrashed;
+        this.dateTrashed = other.dateTrashed != null ? new Date(other.dateTrashed.getTime()) : null; // Deep copy of Date
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -33,6 +43,15 @@ public class ReceiverDTO {
         private UserDTO sender;
         private EmailMetadataDTO metadata;
         private List<AttachmentDTO> attachments;
+
+        public EmailDTO(EmailDTO other) {
+            this.emailId = other.emailId;
+            this.subject = other.subject;
+            this.body = other.body;
+            this.sender = other.sender != null ? new UserDTO(other.sender) : null;
+            this.metadata = other.metadata != null ? new EmailMetadataDTO(other.metadata) : null;
+            this.attachments = other.attachments != null ? List.copyOf(other.attachments) : null; // Shallow copy of the list
+        }
     }
 
     @Data
@@ -44,6 +63,13 @@ public class ReceiverDTO {
         private String fileName;
         private String fileType;
         private Long fileSize;
+
+        public AttachmentDTO(AttachmentDTO other) {
+            this.attachmentId = other.attachmentId;
+            this.fileName = other.fileName;
+            this.fileType = other.fileType;
+            this.fileSize = other.fileSize;
+        }
     }
 
     @Data
@@ -55,6 +81,13 @@ public class ReceiverDTO {
         private String emailAddress;
         private String firstName;
         private String lastName;
+
+        public UserDTO(UserDTO other) {
+            this.userId = other.userId;
+            this.emailAddress = other.emailAddress;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+        }
     }
 
     @Data
@@ -68,5 +101,15 @@ public class ReceiverDTO {
         private Priority priority;
         private Boolean isSpam;
         private LocalDateTime dateSent;
+
+        public EmailMetadataDTO(EmailMetadataDTO other) {
+            this.metadataId = other.metadataId;
+            this.isTrashed = other.isTrashed;
+            this.dateTrashed = other.dateTrashed != null ? new Date(other.dateTrashed.getTime()) : null; // Deep copy of Date
+            this.priority = other.priority;
+            this.isSpam = other.isSpam;
+            this.dateSent = other.dateSent != null ? other.dateSent : null; // LocalDateTime is immutable
+        }
+
     }
 }

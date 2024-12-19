@@ -50,6 +50,9 @@ public class ReceiverService {
                         .body(receiver.getEmail().getBody())
                         .sender(mapToUserDTO(receiver.getEmail().getSender()))
                         .metadata(mapToEmailMetadataDTO(receiver.getEmail().getMetadata()))
+                        .attachments(receiver.getEmail().getAttachments().stream()
+                                .map(this::mapToAttachmentDTO)  // Map each attachment
+                                .collect(Collectors.toList()))
                         .build())
                 .receivers(allReceivers.stream()
                         .map(r -> mapToUserDTO(r.getReceiver()))
@@ -58,6 +61,16 @@ public class ReceiverService {
                 .isTrashed(receiver.getIsTrashed())
                 .isStarred(isStarred)
                 .dateTrashed(receiver.getDateTrashed())
+                .build();
+    }
+
+
+    private ReceiverDTO.AttachmentDTO mapToAttachmentDTO(Attachment attachment) {
+        return ReceiverDTO.AttachmentDTO.builder()
+                .attachmentId(attachment.getAttachmentId())
+                .fileName(attachment.getFileName())
+                .fileType(attachment.getFileType())
+                .fileSize(attachment.getFileSize())
                 .build();
     }
 
@@ -82,26 +95,4 @@ public class ReceiverService {
                 .build();
     }
 
-//    @Transactional
-//    public ReceiverDTO markEmailAsRead(Long receiverId) {
-//        Receiver receiver = receiverRepository.findById(receiverId)
-//                .orElseThrow(() -> new RuntimeException("Receiver not found"));
-//
-//        receiver.setIsRead(true);
-//        Receiver updatedReceiver = receiverRepository.save(receiver);
-//
-//        return mapToReceiverDTO(updatedReceiver, updatedReceiver.getReceiver());
-//    }
-//
-//    @Transactional
-//    public ReceiverDTO moveEmailToTrash(Long receiverId) {
-//        Receiver receiver = receiverRepository.findById(receiverId)
-//                .orElseThrow(() -> new RuntimeException("Receiver not found"));
-//
-//        receiver.setIsTrashed(true);
-//        receiver.setDateTrashed(new java.util.Date());
-//        Receiver updatedReceiver = receiverRepository.save(receiver);
-//
-//        return mapToReceiverDTO(updatedReceiver, updatedReceiver.getReceiver());
-//    }
 }

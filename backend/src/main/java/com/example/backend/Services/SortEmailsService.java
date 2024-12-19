@@ -64,10 +64,19 @@ class SortStrategyFactory {
 // Main service class
 @Service
 public class SortEmailsService {
+
     public List<ReceiverDTO> sort(List<ReceiverDTO> emails, String strategy) {
+        // Deep copy the emails list before sorting to avoid issues with references
+        List<ReceiverDTO> emailsCopy = emails.stream()
+                .map(receiver -> new ReceiverDTO(receiver))  // Deep copy each ReceiverDTO
+                .collect(Collectors.toList());
+
+        // Create the sorting strategy based on the provided strategy
         SortStrategyFactory sortStrategyFactory = new SortStrategyFactory();
         SortCommand sortCommand = new SortCommand();
         sortCommand.setCommand(sortStrategyFactory.getStrategy(strategy));
-        return sortCommand.execute(emails);
+
+        // Execute the sort command
+        return sortCommand.execute(emailsCopy);
     }
 }
