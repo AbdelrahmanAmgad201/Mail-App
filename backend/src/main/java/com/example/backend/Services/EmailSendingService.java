@@ -48,6 +48,7 @@ public class EmailSendingService {
                 .priority(priority)
                 .isTrashed(false)
                 .isSpam(false)
+                .isDraft(Boolean.TRUE.equals(emailRequest.getIsDraft()))
                 .build();
         metadata = emailMetadataRepository.save(metadata);
 

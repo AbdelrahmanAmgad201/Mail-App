@@ -22,4 +22,5 @@ public class SendEmailRequestDTO {
     private List<String> fileTypes;
     private List<String> fileSizes;
     private List<byte[]> content;
+    private Boolean isDraft;
 }
